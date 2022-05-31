@@ -18,7 +18,7 @@ const FindBookPage = (args) => {
                     margin: 'auto',
                     position: 'absolute',
                     left: '50%',
-                    top: '45%',
+                    top: 'calc(50% - 138px)',
                     transform: 'translate(-50%, -50%)'
                 }}
             >

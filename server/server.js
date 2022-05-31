@@ -22,26 +22,31 @@ io.on('connection', socket => {
     socket.on('login', (args, callback) => {
         switch (args.type) {
             case 'pwd':
-                connection.query('select `uid` from `users` where `name` = ? and `pwd` = ?', 
-                [args.user.name, crypto.createHash('md5').update(args.user.pwd).digest('hex')],
-                async (err, rows) => {
-                    if (err) {
-                        throw err
-                    }
-                    let tracker = await genTracker(rows[0].uid)
-                    if (rows.length !== 0) {
-                        callback({
-                            stat: true,
-                            uid: rows[0].uid,
-                            tracker: tracker
-                        })
-                    }
-                    else {
-                        callback({
-                            stat: false
-                        })
-                    }
-                })
+                try {
+                    connection.query('select `uid` from `users` where `name` = ? and `pwd` = ?', 
+                    [args.user.name, crypto.createHash('md5').update(args.user.pwd).digest('hex')],
+                    async (err, rows) => {
+                        if (err) {
+                            throw err
+                        }
+                        let tracker = await genTracker(rows[0].uid)
+                        if (rows.length !== 0) {
+                            callback({
+                                stat: true,
+                                uid: rows[0].uid,
+                                tracker: tracker
+                            })
+                        }
+                        else {
+                            callback({
+                                stat: false
+                            })
+                        }
+                    })
+                }
+                catch (err) {
+                    console.error(err)
+                }
                 break
             case 'tracker':
                 connection.query('select count(*) from `trackers` where `tracker` = ?', args.tracker, (err, rows) => {
