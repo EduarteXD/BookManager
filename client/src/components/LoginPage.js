@@ -25,8 +25,8 @@ const LoginPage = (args) => {
         }, response => {
             if (response.stat === true) {
                 window.localStorage['tracker'] = response.tracker
-                window.localStorage['uid'] = response.uid
-                window.localStorage['avatar'] = avatar
+                // window.localStorage['uid'] = response.uid
+                // window.localStorage['avatar'] = avatar
                 window.location.reload()
             }
         })

@@ -27,9 +27,9 @@ const App = () => {
           if (response.stat) {
             setUser({
               loggedin: true,
-              uid: window.localStorage['uid'],
-              avatar: window.localStorage['avatar'],
-              type: 2
+              uid: response.uid,
+              avatar: response.avatar,
+              type: response.role
             })
           }
           setLoading(false)

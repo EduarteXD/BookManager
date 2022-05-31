@@ -51,14 +51,14 @@ const BookData = (args) => {
                         <Divider />
                     </Box>
                     {
-                        data.author !== '' && (
+                        data.author !== null && (
                             <Typography>
                                 作者：{data.author}
                             </Typography>
                         )
                     }
                     {
-                        data.translator !== '' && (
+                        data.translator !== null && (
                             <Typography>
                                 译者：{data.translator}
                             </Typography>
@@ -110,6 +110,11 @@ const BookData = (args) => {
                     </Box>
                 </Box>
             </Paper>
+            <Box 
+                sx={{
+                    height: '120px'
+                }}
+            />
         </>
     )
 }

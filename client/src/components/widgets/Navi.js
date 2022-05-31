@@ -1,9 +1,10 @@
 import React from 'react'
 import { SpeedDial, SpeedDialAction } from '@mui/material'
 import SpeedDialIcon from '@mui/material/SpeedDialIcon'
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined'
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined'
 
 const Navi = (args) => {
     let actions = []
@@ -20,6 +21,9 @@ const Navi = (args) => {
             case 2:
                 args.setPage(0)
                 break
+            case 3:
+                args.setPage(3)
+                break
         }
     }
 
@@ -27,22 +31,23 @@ const Navi = (args) => {
         case 0:
             // guest
             actions = [
-                { icon: <LoginOutlinedIcon />, name: '登录', id: 0 },
                 { icon: <ManageSearchOutlinedIcon />, name: '找书', id: 2 },
+                { icon: <LoginOutlinedIcon />, name: '登录', id: 0 },
             ]
             break
         case 1:
             // user
             actions = [
-                { icon: <LogoutOutlinedIcon />, name: '登出', id: 1 },
                 { icon: <ManageSearchOutlinedIcon />, name: '找书', id: 2 },
+                { icon: <LogoutOutlinedIcon />, name: '登出', id: 1 },
             ]
             break
         case 2:
             // admin
             actions = [
-                { icon: <LogoutOutlinedIcon />, name: '登出', id: 1 },
+                { icon: <Inventory2OutlinedIcon />, name: '库存', id: 3 },
                 { icon: <ManageSearchOutlinedIcon />, name: '找书', id: 2 },
+                { icon: <LogoutOutlinedIcon />, name: '登出', id: 1 },
             ]
             break
     }

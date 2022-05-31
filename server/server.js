@@ -23,18 +23,46 @@ io.on('connection', socket => {
         switch (args.type) {
             case 'pwd':
                 try {
-                    connection.query('select `uid` from `users` where `name` = ? and `pwd` = ?', 
-                    [args.user.name, crypto.createHash('md5').update(args.user.pwd).digest('hex')],
-                    async (err, rows) => {
+                    connection.query('select `uid` from `users` where `name` = ? and `pwd` = ?',
+                        [args.user.name, crypto.createHash('md5').update(args.user.pwd).digest('hex')],
+                        async (err, rows) => {
+                            if (err) {
+                                throw err
+                            }
+                            let tracker = await genTracker(rows[0].uid)
+                            if (rows.length !== 0) {
+                                callback({
+                                    stat: true,
+                                    uid: rows[0].uid,
+                                    tracker: tracker
+                                })
+                            }
+                            else {
+                                callback({
+                                    stat: false
+                                })
+                            }
+                        })
+                }
+                catch (err) {
+                    console.error(err)
+                }
+                break
+            case 'tracker':
+                try {
+                    connection.query('select `uid`, `role`, `email` from `users` where `uid` = (select `uid` from `trackers` where `tracker` = ?)', args.tracker, (err, rows) => {
                         if (err) {
+                            callback({
+                                stat: false
+                            })
                             throw err
                         }
-                        let tracker = await genTracker(rows[0].uid)
-                        if (rows.length !== 0) {
+                        if (rows.elngth !== 0) {
                             callback({
                                 stat: true,
                                 uid: rows[0].uid,
-                                tracker: tracker
+                                role: rows[0].role,
+                                avatar: crypto.createHash('md5').update(rows[0].email).digest('hex')
                             })
                         }
                         else {
@@ -43,30 +71,9 @@ io.on('connection', socket => {
                             })
                         }
                     })
-                }
-                catch (err) {
+                } catch (err) {
                     console.error(err)
                 }
-                break
-            case 'tracker':
-                connection.query('select count(*) from `trackers` where `tracker` = ?', args.tracker, (err, rows) => {
-                    if (err) {
-                        callback({
-                            stat: false
-                        })
-                        throw err
-                    }
-                    if (rows[0]['count(*)'] === 0) {
-                        callback({
-                            stat: false
-                        })
-                    }
-                    else {
-                        callback({
-                            stat: true
-                        })
-                    }
-                })
                 break
         }
     })
@@ -89,20 +96,59 @@ io.on('connection', socket => {
         let apiKey = process.env.ISBN_API_KEY
         let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
         fetch(api)
-        .then(response => response.json())
-        .then(body => {
-            // console.log(body)
-            if (body.msg === '请求成功') {
+            .then(response => response.json())
+            .then(body => {
+                // console.log(body)
+                if (body.msg === '请求成功') {
+                    callback({
+                        bookName: body.data.name,
+                        author: body.data.author,
+                        translator: body.data.translator,
+                        photo: body.data.photoUrl,
+                        description: body.data.description,
+                        publisher: body.data.publishing
+                    })
+                }
+            })
+    })
+
+    socket.on('bookCount', callback => {
+        try {
+            connection.query('select count(*) from `inventory`', (err, rows) => {
+                if (err) {
+                    callback({
+                        stat: false
+                    })
+                    throw err
+                }
                 callback({
-                    bookName: body.data.name,
-                    author: body.data.author,
-                    translator: body.data.translator,
-                    photo: body.data.photoUrl,
-                    description: body.data.description,
-                    publisher: body.data.publishing
+                    stat: true,
+                    count: Math.ceil(rows[0]['count(*)'] / 40)
                 })
-            }
-        })
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    })
+
+    socket.on('inventory', (page, callback) => {
+        try {
+            connection.query('select `bookid`, `bookname`, `description`, `photo` from `inventory` where `bookid` >= ? and `bookid` < ?', 
+            [parseInt(page) * 40, (parseInt(page) + 1) * 40], (err, rows) => {
+                if (err) {
+                    callback({
+                        stat: false
+                    })
+                    throw err
+                }
+                callback({
+                    stat: true,
+                    data: rows
+                })
+            })
+        } catch (err) {
+            console.error(err)
+        }
     })
 })
 

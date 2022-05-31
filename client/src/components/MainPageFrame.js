@@ -3,6 +3,7 @@ import React from 'react'
 import LoginPage from './LoginPage'
 import FindBookPage from './FindBookPage'
 import BookData from './BookData'
+import InventoryPage from './InventoryPage'
 
 import Navi from './widgets/Navi'
 
@@ -35,7 +36,13 @@ const MainPageFrame = (args) => {
             }
             {
                 page === 2 && <BookData 
+                    user={args.user}
                     setPage={setPage}
+                />
+            }
+            {
+                page === 3 && <InventoryPage
+                    ws={ws}
                 />
             }
         </>
