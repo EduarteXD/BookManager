@@ -1,8 +1,8 @@
 import React from 'react'
 import websocket from 'socket.io-client'
 
-import LoginPage from './components/LoginPage'
 import LoadingPage from './components/LoadingPage'
+import MainPageFrame from './components/MainPageFrame'
 
 const App = () => {
   const [ws, setWs] = React.useState(null)
@@ -28,7 +28,8 @@ const App = () => {
             setUser({
               loggedin: true,
               uid: window.localStorage['uid'],
-              avatar: window.localStorage['avatar']
+              avatar: window.localStorage['avatar'],
+              type: 2
             })
           }
           setLoading(false)
@@ -52,13 +53,10 @@ const App = () => {
           </>
         ) : (
           <>
-            {
-              !user.loggedin && (
-                <LoginPage 
-                  ws={ws}
-                />
-              )
-            }
+            <MainPageFrame
+              user={user}
+              ws={ws}
+            />
           </>
         )
       }

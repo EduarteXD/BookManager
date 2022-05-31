@@ -5,7 +5,6 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const mysql = require('mysql')
 const crypto = require('crypto')
-const { resolve } = require('path')
 
 dotenv.config()
 
