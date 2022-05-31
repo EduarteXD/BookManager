@@ -1,24 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import websocket from 'socket.io-client'
 
-function App() {
+import LoginPage from './components/LoginPage'
+import LoadingPage from './components/LoadingPage'
+
+const App = () => {
+  const [ws, setWs] = React.useState(null)
+  const [loading, setLoading] = React.useState(true)
+  const [user, setUser] = React.useState({
+    loggedin: false
+  })
+
+  const connectWs = () => {
+    setWs(websocket('localhost:1333'))
+  }
+
+  React.useEffect(() => {
+    if (ws) {
+      if (window.localStorage['tracker'] !== undefined) {
+        let tracker = window.localStorage['tracker']
+        console.log('trying auto login with: ' + tracker)
+        ws.emit('login', {
+          type: 'tracker',
+          tracker: tracker
+        }, response => {
+          if (response.stat) {
+            setUser({
+              loggedin: true,
+              uid: window.localStorage['uid'],
+              avatar: window.localStorage['avatar']
+            })
+          }
+          setLoading(false)
+        })
+      }
+      else {
+        setLoading(false)
+      }
+    }
+    else {
+      connectWs()
+    }
+  }, [ws])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {
+        loading ? (
+          <>
+            <LoadingPage />
+          </>
+        ) : (
+          <>
+            {
+              !user.loggedin && (
+                <LoginPage 
+                  ws={ws}
+                />
+              )
+            }
+          </>
+        )
+      }
+    </>
   );
 }
 
