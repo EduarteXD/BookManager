@@ -5,45 +5,9 @@ import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
 
 import resolveISBN from '../functions/resolveISBN'
 
-const SearchBar = () => {
-    return (
-        <Paper
-            component='form'
-            sx={{
-                display: 'flex', 
-                alignItems: 'center',
-                height: '57px'
-            }}
-        >
-            <IconButton
-                sx={{
-                    p: '10px'
-                }}
-                aria-label="isbn"
-            >
-                <BookOutlinedIcon />
-            </IconButton>
-            <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="输入书号来搜索"
-                id='isbn'
-                onChange={() => document.getElementById('isbn').value = resolveISBN(document.getElementById('isbn').value)}
-                inputProps={{ 'aria-label': 'isbn' }}
-            />
-            <IconButton 
-                sx={{ p: '10px' }} 
-                aria-label="search"
-                onClick={() => {
-                    
-                }}
-            >
-                <ManageSearchOutlinedIcon />
-            </IconButton>
-        </Paper>
-    )
-}
+const FindBookPage = (args) => {
+    let ws = args.ws
 
-const FindBookPage = () => {
     return (
         <>
             <Box
@@ -56,7 +20,43 @@ const FindBookPage = () => {
                     transform: 'translate(-50%, -50%)'
                 }}
             >
-                <SearchBar />
+                <Paper
+                    component='form'
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        height: '57px'
+                    }}
+                >
+                    <IconButton
+                        sx={{
+                            p: '10px'
+                        }}
+                        aria-label="isbn"
+                    >
+                        <BookOutlinedIcon />
+                    </IconButton>
+                    <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="输入书号来搜索"
+                        id='isbn'
+                        onChange={() => document.getElementById('isbn').value = resolveISBN(document.getElementById('isbn').value)}
+                        inputProps={{ 'aria-label': 'isbn' }}
+                    />
+                    <IconButton
+                        sx={{ p: '10px' }}
+                        aria-label="search"
+                        onClick={() => {
+                            let isbn = document.getElementById('isbn').value.replace(/-+/g, "")
+                            ws.emit('bookData', isbn, response => {
+                                window.sessionStorage['bookData'] = JSON.stringify(response)
+                                args.setPage(2)
+                            })
+                        }}
+                    >
+                        <ManageSearchOutlinedIcon />
+                    </IconButton>
+                </Paper>
             </Box>
         </>
     )

@@ -2,14 +2,17 @@ import React from 'react'
 
 import LoginPage from './LoginPage'
 import FindBookPage from './FindBookPage'
+import BookData from './BookData'
+
 import Navi from './widgets/Navi'
 
 const MainPageFrame = (args) => {
-    const ws = args.ws
+    let ws = args.ws
 
     /* pages:
         -0: searching page
         -1: login page
+        -2: book data
     */
     const [page, setPage] = React.useState(0)
 
@@ -20,11 +23,19 @@ const MainPageFrame = (args) => {
                 setPage={setPage}
             />
             {
-                page === 0 && <FindBookPage />
+                page === 0 && <FindBookPage 
+                    ws={ws}
+                    setPage={setPage}
+                />
             }
             {
                 page === 1 && <LoginPage
                     ws={ws}
+                />
+            }
+            {
+                page === 2 && <BookData 
+                    setPage={setPage}
                 />
             }
         </>

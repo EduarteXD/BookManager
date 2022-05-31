@@ -10,7 +10,7 @@ const LoginPage = (args) => {
         - 3: registering and waiting for email verification
     */
     const [stat, setStat] = React.useState(0)
-    const ws = args.ws
+    let ws = args.ws
 
     const handleLogin = () => {
         let name = document.getElementById('username').value

@@ -79,6 +79,26 @@ io.on('connection', socket => {
             })
         }
     })
+
+    socket.on('bookData', (isbn, callback) => {
+        let apiKey = process.env.ISBN_API_KEY
+        let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
+        fetch(api)
+        .then(response => response.json())
+        .then(body => {
+            // console.log(body)
+            if (body.msg === '请求成功') {
+                callback({
+                    bookName: body.data.name,
+                    author: body.data.author,
+                    translator: body.data.translator,
+                    photo: body.data.photoUrl,
+                    description: body.data.description,
+                    publisher: body.data.publishing
+                })
+            }
+        })
+    })
 })
 
 server.listen(1333, () => {

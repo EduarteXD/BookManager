@@ -17,6 +17,9 @@ const Navi = (args) => {
                 window.localStorage['tracker'] = undefined
                 window.location.reload()
                 break
+            case 2:
+                args.setPage(0)
+                break
         }
     }
 
@@ -49,7 +52,7 @@ const Navi = (args) => {
             <SpeedDial
                 ariaLabel='navigation'
                 sx={{
-                    position: 'absolute',
+                    position: 'fixed',
                     bottom: 32,
                     right: 32
                 }}
