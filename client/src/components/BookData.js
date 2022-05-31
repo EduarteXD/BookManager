@@ -1,4 +1,4 @@
-import { Grid, Paper, Typography, Box, Divider, Button } from '@mui/material'
+import { Paper, Typography, Box, Divider, Button } from '@mui/material'
 import React from 'react'
 
 const BookData = (args) => {
