@@ -7,14 +7,15 @@ const BookData = (args) => {
     return (
         <>
             {
-                data.photo !== null && (
+                data.photo !== '' && (
                     <img
                         src={data.photo}
                         alt='book cover'
                         style={{
+                            maxWidth: '600px',
                             position: 'fixed',
                             bottom: '-150px',
-                            left: '10px',
+                            left: '50px',
                             width: '650px',
                             opacity: '50%',
                             zIndex: -1
@@ -50,29 +51,31 @@ const BookData = (args) => {
                         <Divider />
                     </Box>
                     {
-                        data.author !== null && (
+                        data.author !== '' && (
                             <Typography>
                                 作者：{data.author}
                             </Typography>
                         )
                     }
                     {
-                        data.translator !== null && (
+                        data.translator !== '' && (
                             <Typography>
                                 译者：{data.translator}
                             </Typography>
                         )
                     }
-                    <Box
-                        sx={{
-                            padding: '20px 0 0 0'
-                        }}
-                    />
                     {
-                        data.description !== null && (
-                            <Typography>
-                                {data.description}
-                            </Typography>
+                        data.description !== '' && (
+                            <>
+                                <Box
+                                    sx={{
+                                        padding: '20px 0 0 0'
+                                    }}
+                                />
+                                <Typography>
+                                    {data.description}
+                                </Typography>
+                            </>
                         )
                     }
                     <Box
@@ -93,14 +96,6 @@ const BookData = (args) => {
                         >
                             借阅
                         </Button>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'inline',
-                            padding: '0 10px 0 0'
-                        }}
-                    >
-                        <Button>关于作者</Button>
                     </Box>
                     <Box
                         sx={{

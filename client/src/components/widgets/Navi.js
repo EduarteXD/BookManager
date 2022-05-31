@@ -14,7 +14,7 @@ const Navi = (args) => {
                 args.setPage(1)
                 break
             case 1:
-                window.localStorage['tracker'] = undefined
+                window.localStorage.removeItem('tracker')
                 window.location.reload()
                 break
             case 2:

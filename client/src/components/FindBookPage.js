@@ -1,9 +1,11 @@
 import React from 'react'
-import { Box, Paper, IconButton, InputBase } from '@mui/material'
+import { Box, Paper, IconButton, InputBase, Avatar } from '@mui/material'
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined'
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
 
 import resolveISBN from '../functions/resolveISBN'
+
+import findBookImg from '../findbook.png'
 
 const FindBookPage = (args) => {
     let ws = args.ws
@@ -12,7 +14,7 @@ const FindBookPage = (args) => {
         <>
             <Box
                 sx={{
-                    width: '70vw',
+                    width: '35vw',
                     margin: 'auto',
                     position: 'absolute',
                     left: '50%',
@@ -20,6 +22,19 @@ const FindBookPage = (args) => {
                     transform: 'translate(-50%, -50%)'
                 }}
             >
+                <Avatar
+                    src={findBookImg}
+                    sx={{
+                        margin: 'auto',
+                        width: 256,
+                        height: 256
+                    }}
+                />
+                <Box
+                    sx={{
+                        padding: '20px 0 0 0'
+                    }}
+                />
                 <Paper
                     component='form'
                     sx={{
