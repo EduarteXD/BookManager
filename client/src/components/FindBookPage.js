@@ -15,7 +15,11 @@ const FindBookPage = (args) => {
         <>
             <Box
                 sx={{
-                    width: '35vw',
+                    width: {
+                        sx: '67vw',
+                        md: '45vw',
+                        lg: '35vw'
+                    },
                     margin: 'auto',
                     position: 'absolute',
                     left: '50%',

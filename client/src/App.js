@@ -12,7 +12,7 @@ const App = () => {
   })
 
   const connectWs = () => {
-    setWs(websocket('localhost:1333'))
+    setWs(websocket('/'))
   }
 
   React.useEffect(() => {
@@ -40,8 +40,10 @@ const App = () => {
       }
     }
     else {
-      if (Notification.permission !== 'granted' && Notification.permission !== "denied") {
-        Notification.requestPermission()
+      if (window.Notification) {
+        if (Notification.permission !== 'granted' && Notification.permission !== "denied") {
+          Notification.requestPermission()
+        }
       }
       connectWs()
     }
