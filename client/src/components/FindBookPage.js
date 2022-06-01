@@ -42,6 +42,9 @@ const FindBookPage = (args) => {
                 />
                 <Paper
                     component='form'
+                    onSubmit={(event) => {
+                        event.preventDefault()
+                    }}
                     sx={{
                         display: 'flex',
                         alignItems: 'center',

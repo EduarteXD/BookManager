@@ -99,6 +99,7 @@ io.on('connection', socket => {
         request(api, (err, res, body) => {
             if (!err && res.statusCode == 200) {
                 body = JSON.parse(body)
+                // console.log(body)
                 if (body.msg === '请求成功') {
                     callback({
                         bookName: body.data.name,
