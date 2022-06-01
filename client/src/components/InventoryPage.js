@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Pagination, Stack } from '@mui/material'
 import React from 'react'
 
 import BookCard from './widgets/BookCard'
@@ -11,7 +11,7 @@ const InventoryPage = (args) => {
     let ws = args.ws
 
     React.useState(() => {
-        if (pageCount == -1) {
+        if (pageCount === -1) {
             ws.emit('bookCount', response => {
                 if (response.stat) {
                     setPageCount(response.count)
@@ -65,6 +65,19 @@ const InventoryPage = (args) => {
                     height: '120px'
                 }}
             />
+            <Box
+                sx={{
+                    position: 'fixed',
+                    bottom: '25px',
+                    margin: 'auto',
+                    left: '50%',
+                    transform: 'translate(-50%)'
+                }}
+            >
+                <Stack spacing={2}>
+                    <Pagination count={pageCount} hideFirstButton hideLastButton />
+                </Stack>
+            </Box>
         </>
     )
 }
