@@ -4,6 +4,7 @@ import BookOutlinedIcon from '@mui/icons-material/BookOutlined'
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
 
 import resolveISBN from '../functions/resolveISBN'
+import notification from '../functions/notification'
 
 import findBookImg from '../findbook.png'
 
@@ -48,6 +49,7 @@ const FindBookPage = (args) => {
                             p: '10px'
                         }}
                         aria-label="isbn"
+                        onClick={() => notification('hello there', 'now you found me')}
                     >
                         <BookOutlinedIcon />
                     </IconButton>

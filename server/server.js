@@ -98,7 +98,6 @@ io.on('connection', socket => {
         fetch(api)
             .then(response => response.json())
             .then(body => {
-                // console.log(body)
                 if (body.msg === '请求成功') {
                     callback({
                         bookName: body.data.name,

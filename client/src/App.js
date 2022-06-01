@@ -40,6 +40,9 @@ const App = () => {
       }
     }
     else {
+      if (Notification.permission !== 'granted' && Notification.permission !== "denied") {
+        Notification.requestPermission()
+      }
       connectWs()
     }
   }, [ws])
