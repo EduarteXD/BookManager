@@ -1,5 +1,6 @@
 const { Server } = require('socket.io')
 const http = require('http')
+const request = require('request')
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
@@ -95,9 +96,9 @@ io.on('connection', socket => {
     socket.on('bookData', (isbn, callback) => {
         let apiKey = process.env.ISBN_API_KEY
         let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
-        fetch(api)
-            .then(response => response.json())
-            .then(body => {
+        request(api, (err, res, body) => {
+            if (!err && res.statusCode == 200) {
+                body = JSON.parse(body)
                 if (body.msg === '请求成功') {
                     callback({
                         bookName: body.data.name,
@@ -108,7 +109,8 @@ io.on('connection', socket => {
                         publisher: body.data.publishing
                     })
                 }
-            })
+            }
+        })
     })
 
     socket.on('bookCount', callback => {

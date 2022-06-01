@@ -7,7 +7,7 @@ const BookData = (args) => {
     return (
         <>
             {
-                data.photo !== '' && (
+                data.photo !== null && (
                     <img
                         src={data.photo}
                         alt='book cover'
@@ -77,6 +77,14 @@ const BookData = (args) => {
                                 </Typography>
                             </>
                         )
+                    }
+                    {
+                        data.description === '' &&
+                        data.author === null &&
+                        data.translator === null &&
+                        <Typography>
+                            暂时没有更多信息!
+                        </Typography>
                     }
                     <Box
                         sx={{

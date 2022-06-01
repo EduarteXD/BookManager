@@ -59,9 +59,14 @@ const FindBookPage = (args) => {
                     </IconButton>
                     <InputBase
                         sx={{ ml: 1, flex: 1 }}
-                        placeholder="输入书号来搜索"
+                        placeholder="我在年轻时就读过..."
                         id='isbn'
-                        onChange={() => document.getElementById('isbn').value = resolveISBN(document.getElementById('isbn').value)}
+                        onChange={() => {
+                            let resolved = resolveISBN(document.getElementById('isbn').value)
+                            if (resolved) {
+                                document.getElementById('isbn').value = resolved
+                            }
+                        }}
                         inputProps={{ 'aria-label': 'isbn' }}
                     />
                     <IconButton
