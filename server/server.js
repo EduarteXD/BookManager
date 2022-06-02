@@ -4,7 +4,7 @@ const request = require('request')
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const crypto = require('crypto')
 
 dotenv.config()
