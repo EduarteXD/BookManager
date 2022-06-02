@@ -31,7 +31,7 @@ const App = () => {
               type: response.role
             })
           }
-          console.log('ver. dev@20220601#7')
+          console.log('ver. dev@20220602#7')
           setLoading(false)
         })
       }
