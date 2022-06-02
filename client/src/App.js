@@ -19,7 +19,6 @@ const App = () => {
     if (ws) {
       if (window.localStorage['tracker'] !== undefined) {
         let tracker = window.localStorage['tracker']
-        console.log('trying auto login with: ' + tracker)
         ws.emit('login', {
           type: 'tracker',
           tracker: tracker
@@ -32,12 +31,15 @@ const App = () => {
               type: response.role
             })
           }
+          console.log('ver. dev@20220601#7')
           setLoading(false)
         })
       }
+      /*
       else {
         setLoading(false)
       }
+      */
     }
     else {
       if (window.Notification) {

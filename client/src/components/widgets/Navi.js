@@ -5,6 +5,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined'
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined'
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 
 const Navi = (args) => {
     let actions = []
@@ -61,7 +62,7 @@ const Navi = (args) => {
                     bottom: 32,
                     right: 32
                 }}
-                icon={<SpeedDialIcon />}
+                icon={<MenuOutlinedIcon />}
             >
                 {
                     actions.map(action => (

@@ -4,6 +4,7 @@ import LoginPage from './LoginPage'
 import FindBookPage from './FindBookPage'
 import BookData from './BookData'
 import InventoryPage from './InventoryPage'
+import SearchResultPage from './SearchResultPage'
 
 import Navi from './widgets/Navi'
 
@@ -42,6 +43,11 @@ const MainPageFrame = (args) => {
             }
             {
                 page === 3 && <InventoryPage
+                    ws={ws}
+                />
+            }
+            {
+                page === 4 && <SearchResultPage
                     ws={ws}
                 />
             }

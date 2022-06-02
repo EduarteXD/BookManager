@@ -94,20 +94,26 @@ io.on('connection', socket => {
     })
 
     socket.on('bookData', (isbn, callback) => {
-        let apiKey = process.env.ISBN_API_KEY
-        let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
-        request(api, (err, res, body) => {
-            if (!err && res.statusCode == 200) {
+        // let apiKey = process.env.ISBN_API_KEY
+        // let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
+        let api = `https://ixnet.icu/api/book?isbn=${isbn}`
+        request({
+            url: api,
+            timeout: 5000,
+            method: 'GET',
+            rejectUnauthorized: false
+        }, (err, res, body) => {
+            if (!err && res.statusCode === 200) {
                 body = JSON.parse(body)
                 // console.log(body)
-                if (body.msg === '请求成功') {
+                if (body.success) {
                     callback({
                         bookName: body.data.name,
                         author: body.data.author,
-                        translator: body.data.translator,
-                        photo: body.data.photoUrl,
-                        description: body.data.description,
-                        publisher: body.data.publishing
+                        photo: body.data.cover,
+                        description: body.data.summary,
+                        publisher: body.data.publisher,
+                        price: body.data.price
                     })
                 }
             }
@@ -145,6 +151,25 @@ io.on('connection', socket => {
                 }
                 callback({
                     stat: true,
+                    data: rows
+                })
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    })
+
+    socket.on('searchBook', (key, callback) => {
+        try {
+            connection.query('select `bookname`, `description`, `photo`, `publisher`, `price`, `category`, `stock` from `inventory` where `bookname` like ?', key, (err, rows) => {
+                if (err) {
+                    callback({
+                        success: false
+                    })
+                    throw err
+                }
+                callback({
+                    success: true,
                     data: rows
                 })
             })

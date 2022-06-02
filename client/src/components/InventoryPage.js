@@ -18,7 +18,7 @@ const InventoryPage = (args) => {
                     ws.emit('inventory', 0, response => {
                         if (response.stat) {
                             setBooks(response.data)
-                            console.log(response.data)
+                            // console.log(response.data)
                         }
                     })
                 }
@@ -54,7 +54,6 @@ const InventoryPage = (args) => {
                                 <BookCard
                                     bookInfo={book}
                                 />
-
                             </Grid>
                         ))
                     }
@@ -75,7 +74,7 @@ const InventoryPage = (args) => {
                 }}
             >
                 <Stack spacing={2}>
-                    <Pagination count={pageCount} hideFirstButton hideLastButton />
+                    <Pagination count={pageCount} hidefirstbutton="true" hidelastbutton="true" />
                 </Stack>
             </Box>
         </>

@@ -14,8 +14,8 @@ const BookData = (args) => {
                         style={{
                             maxWidth: '600px',
                             position: 'fixed',
-                            bottom: '-150px',
-                            left: '50px',
+                            bottom: '-50px',
+                            left: '-50px',
                             width: '650px',
                             opacity: '50%',
                             zIndex: -1
@@ -25,7 +25,10 @@ const BookData = (args) => {
             }
             <Paper
                 sx={{
-                    width: '67vw',
+                    width: {
+                        sx: '67vw',
+                        md: '55vw'
+                    },
                     margin: 'auto',
                     position: 'absolute',
                     left: '50%',
@@ -51,16 +54,9 @@ const BookData = (args) => {
                         <Divider />
                     </Box>
                     {
-                        data.author !== null && (
+                        data.author !== '' && (
                             <Typography>
-                                作者：{data.author}
-                            </Typography>
-                        )
-                    }
-                    {
-                        data.translator !== null && (
-                            <Typography>
-                                译者：{data.translator}
+                                {data.author}
                             </Typography>
                         )
                     }
@@ -80,8 +76,7 @@ const BookData = (args) => {
                     }
                     {
                         data.description === '' &&
-                        data.author === null &&
-                        data.translator === null &&
+                        data.author === '' &&
                         <Typography>
                             暂时没有更多信息!
                         </Typography>

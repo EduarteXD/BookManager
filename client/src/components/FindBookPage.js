@@ -11,6 +11,21 @@ import findBookImg from '../findbook.png'
 const FindBookPage = (args) => {
     let ws = args.ws
 
+    const handleSubmit = () => {
+        let key = document.getElementById('isbn').value.replace(/-+/g, "")
+        if (isNaN(key)) {
+            // search by title
+            window.sessionStorage['searchName'] = key
+            args.setPage(4)
+        } else {
+            // search by isbn
+            ws.emit('bookData', key, response => {
+                window.sessionStorage['bookData'] = JSON.stringify(response)
+                args.setPage(2)
+            })
+        }
+    }
+
     return (
         <>
             <Box
@@ -44,6 +59,7 @@ const FindBookPage = (args) => {
                     component='form'
                     onSubmit={(event) => {
                         event.preventDefault()
+                        handleSubmit()
                     }}
                     sx={{
                         display: 'flex',
@@ -75,13 +91,7 @@ const FindBookPage = (args) => {
                     <IconButton
                         sx={{ p: '10px' }}
                         aria-label="search"
-                        onClick={() => {
-                            let isbn = document.getElementById('isbn').value.replace(/-+/g, "")
-                            ws.emit('bookData', isbn, response => {
-                                window.sessionStorage['bookData'] = JSON.stringify(response)
-                                args.setPage(2)
-                            })
-                        }}
+                        onClick={handleSubmit}
                     >
                         <ManageSearchOutlinedIcon />
                     </IconButton>
