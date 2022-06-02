@@ -4,6 +4,8 @@ import websocket from 'socket.io-client'
 import LoadingPage from './components/LoadingPage'
 import MainPageFrame from './components/MainPageFrame'
 
+import './hide_overflow_y.css'
+
 const App = () => {
   const [ws, setWs] = React.useState(null)
   const [loading, setLoading] = React.useState(true)

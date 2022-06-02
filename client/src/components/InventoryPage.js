@@ -18,7 +18,6 @@ const InventoryPage = (args) => {
                     ws.emit('inventory', 0, response => {
                         if (response.stat) {
                             setBooks(response.data)
-                            // console.log(response.data)
                         }
                     })
                 }
@@ -76,7 +75,18 @@ const InventoryPage = (args) => {
                 }}
             >
                 <Stack spacing={2}>
-                    <Pagination count={pageCount} hidefirstbutton="true" hidelastbutton="true" />
+                    <Pagination 
+                        count={pageCount} 
+                        hidefirstbutton="true" 
+                        hidelastbutton="true" 
+                        onChange={(e, p) => {
+                            ws.emit('inventory', p - 1, response => {
+                                if (response.stat) {
+                                    setBooks(response.data)
+                                }
+                            })
+                        }}
+                    />
                 </Stack>
             </Box>
         </>

@@ -13,6 +13,7 @@ const BookCard = (args) => {
                         ws.emit('bookData', bookInfo.isbn, response => {
                             window.sessionStorage['bookData'] = JSON.stringify(response)
                             window.sessionStorage['fromPage'] = 3
+                            console.log(response)
                             args.setPage(2)
                         })
                     }}

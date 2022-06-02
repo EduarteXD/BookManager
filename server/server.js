@@ -96,28 +96,51 @@ io.on('connection', socket => {
     socket.on('bookData', (isbn, callback) => {
         // let apiKey = process.env.ISBN_API_KEY
         // let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
-        let api = `https://ixnet.icu/api/book?isbn=${isbn}`
-        request({
-            url: api,
-            timeout: 5000,
-            method: 'GET',
-            rejectUnauthorized: false
-        }, (err, res, body) => {
-            if (!err && res.statusCode === 200) {
-                body = JSON.parse(body)
-                // console.log(body)
-                if (body.success) {
-                    callback({
-                        bookName: body.data.name,
-                        author: body.data.author,
-                        photo: body.data.cover,
-                        description: body.data.summary,
-                        publisher: body.data.publisher,
-                        price: body.data.price
-                    })
-                }
-            }
-        })
+        try {
+            connection.query('select `bookname`, `authors`, `description`, `photo`, `publisher`, `price`, `stock`, `borrowed` from `inventory` where `isbn` = ?',
+                isbn, (err, rows) => {
+                    if (err) {
+                        throw err
+                    }
+                    if (rows.length > 0) {
+                        callback({
+                            bookName: rows[0].bookname,
+                            author: rows[0].authors,
+                            photo: rows[0].photo,
+                            description: rows[0].description,
+                            publisher: rows[0].publisher,
+                            price: rows[0].price,
+                            stock: rows[0].stock - rows[0].borrowed
+                        })
+                    } else {
+                        let api = `https://ixnet.icu/api/book?isbn=${isbn}`
+                        request({
+                            url: api,
+                            timeout: 5000,
+                            method: 'GET',
+                            rejectUnauthorized: false
+                        }, (err, res, body) => {
+                            if (!err && res.statusCode === 200) {
+                                body = JSON.parse(body)
+                                // console.log(body)
+                                if (body.success) {
+                                    callback({
+                                        bookName: body.data.name,
+                                        author: body.data.author,
+                                        photo: body.data.cover,
+                                        description: body.data.summary,
+                                        publisher: body.data.publisher,
+                                        price: body.data.price,
+                                        stock: 0
+                                    })
+                                }
+                            }
+                        })
+                    }
+                })
+        } catch (err) {
+            console.error(err)
+        }
     })
 
     socket.on('bookCount', callback => {
@@ -131,7 +154,7 @@ io.on('connection', socket => {
                 }
                 callback({
                     stat: true,
-                    count: Math.ceil(rows[0]['count(*)'] / 40)
+                    count: Math.ceil(rows[0]['count(*)'] / 12)
                 })
             })
         } catch (err) {
@@ -141,19 +164,19 @@ io.on('connection', socket => {
 
     socket.on('inventory', (page, callback) => {
         try {
-            connection.query('select `bookid`, `bookname`, `description`, `photo`, `isbn` from `inventory` where `bookid` >= ? and `bookid` < ?', 
-            [parseInt(page) * 40, (parseInt(page) + 1) * 40], (err, rows) => {
-                if (err) {
+            connection.query('select `bookid`, `bookname`, `description`, `photo`, `isbn` from `inventory` where `bookid` > ? and `bookid` <= ?',
+                [parseInt(page) * 12, (parseInt(page) + 1) * 12], (err, rows) => {
+                    if (err) {
+                        callback({
+                            stat: false
+                        })
+                        throw err
+                    }
                     callback({
-                        stat: false
+                        stat: true,
+                        data: rows
                     })
-                    throw err
-                }
-                callback({
-                    stat: true,
-                    data: rows
                 })
-            })
         } catch (err) {
             console.error(err)
         }
@@ -180,19 +203,19 @@ io.on('connection', socket => {
 
     socket.on('addBook', (data, callback) => {
         try {
-            connection.query('insert into `inventory` (`isbn`, `bookname`, `authors`, `description`, `photo`, `category`, `stock`, `price`, `publisher`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [data.isbn, data.name, data.author, data.description, data.photo, data.category, data.count, data.price, data.publisher], err => {
-                if (err) {
+            connection.query('insert into `inventory` (`isbn`, `bookname`, `authors`, `description`, `photo`, `category`, `stock`, `price`, `publisher`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [data.isbn, data.name, data.author, data.description, data.photo, data.category, data.count, data.price, data.publisher], err => {
+                    if (err) {
+                        callback({
+                            success: false,
+                            msg: err
+                        })
+                        throw err
+                    }
                     callback({
-                        success: false,
-                        msg: err
+                        success: true
                     })
-                    throw err
-                }
-                callback({
-                    success: true
                 })
-            })
         } catch (err) {
             console.error(err)
         }

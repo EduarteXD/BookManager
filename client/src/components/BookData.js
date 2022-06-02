@@ -96,11 +96,24 @@ const BookData = (args) => {
                     >
                         {
                             args.user.loggedin ? (
-                                <Button
-                                    variant='outlined'
-                                >
-                                    借阅
-                                </Button>
+                                <>
+                                    {
+                                        parseInt(data.stock) > 0 ? (
+                                            <Button
+                                                variant='outlined'
+                                            >
+                                                借阅
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant='outlined'
+                                                disabled
+                                            >
+                                                无库存
+                                            </Button>
+                                        )
+                                    }
+                                </>
                             ) : (
                                 <Button
                                     variant='outlined'
