@@ -1,6 +1,8 @@
 import { Paper, Typography, Box, Divider, Button } from '@mui/material'
 import React from 'react'
 
+import throwBall from '../functions/throwBall'
+
 const BookData = (args) => {
     let data = JSON.parse(window.sessionStorage['bookData'])
 
@@ -101,6 +103,24 @@ const BookData = (args) => {
                                         parseInt(data.stock) > 0 ? (
                                             <Button
                                                 variant='outlined'
+                                                onClick={(event) => {
+                                                    let xs = parseInt(event.clientX)
+                                                    let ys = parseInt(event.clientY)
+                                                    let xe = parseInt(window.innerWidth) - 70
+                                                    let ye = parseInt(window.innerHeight) - 70
+
+                                                    let element = document.getElementById('bookEmoji')
+
+                                                    throwBall(xs, ys, xe, ye, (x, y) => {
+                                                        element.style.left = x + 'px'
+                                                        element.style.top = y + 'px'
+                                                        element.style.display = 'block'
+                                                    })
+
+                                                    setTimeout(() => {
+                                                        element.style.display = 'none'
+                                                    }, 500)
+                                                }}
                                             >
                                                 借阅
                                             </Button>
@@ -160,6 +180,19 @@ const BookData = (args) => {
                     height: '120px'
                 }}
             />
+            <div
+                id='bookEmoji'
+                style={{
+                    position: 'absolute',
+                    width: '32px',
+                    height: '32px',
+                    top: 0,
+                    left: 0,
+                    display: 'none'
+                }}
+            >
+                📕
+            </div>
         </>
     )
 }
