@@ -12,8 +12,8 @@ const AddToInventoryPage = (args) => {
             <Paper
                 sx={{
                     width: {
-                        xs: '78vw',
-                        md: '67vw'
+                        xs: '67vw',
+                        md: '55vw'
                     },
                     position: 'absolute',
                     top: '50%',
@@ -133,7 +133,7 @@ const AddToInventoryPage = (args) => {
                                 fullWidth
                                 label='分类'
                                 id='category'
-                                autoFocus
+                                defaultValue='默认分类'
                             />
                         </Grid>
                         <Grid
