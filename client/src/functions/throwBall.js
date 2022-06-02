@@ -9,15 +9,15 @@ const throwBall = (xs, ys, xe, ye, setPos) => {
 
     let interval = setInterval(() => {
         t++
-        if (t === 102) {
+        if (t === 200) {
             clearInterval(interval)
         } else {
-            x += 2 * ls
-            y += 2 * vs
+            x += ls
+            y += vs
             setPos(x, y)
-            vs = vs + 2 * g
+            vs = vs + g
         }
-    }, 2)
+    }, 3)
 }
 
 export default throwBall
