@@ -5,11 +5,35 @@ import FindBookPage from './FindBookPage'
 import BookData from './BookData'
 import InventoryPage from './InventoryPage'
 import SearchResultPage from './SearchResultPage'
+import AddToInventoryPage from './AddToInventoryPage'
 
 import Navi from './widgets/Navi'
+import { Snackbar, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 
 const MainPageFrame = (args) => {
     let ws = args.ws
+
+    const [msg, setMsg] = React.useState('')
+    const [msgOn, setMsgOn] = React.useState(false)
+
+    const action = (
+        <>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={() => setMsgOn(false)}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+    )
+
+    const success = (msg) => {
+        setMsg(msg)
+        setMsgOn(true)
+    }
 
     /* pages:
         -0: searching page
@@ -25,7 +49,7 @@ const MainPageFrame = (args) => {
                 setPage={setPage}
             />
             {
-                page === 0 && <FindBookPage 
+                page === 0 && <FindBookPage
                     ws={ws}
                     setPage={setPage}
                 />
@@ -36,7 +60,7 @@ const MainPageFrame = (args) => {
                 />
             }
             {
-                page === 2 && <BookData 
+                page === 2 && <BookData
                     user={args.user}
                     setPage={setPage}
                 />
@@ -51,6 +75,20 @@ const MainPageFrame = (args) => {
                     ws={ws}
                 />
             }
+            {
+                page === 5 && <AddToInventoryPage
+                    ws={ws}
+                    setPage={setPage}
+                    success={success}
+                />
+            }
+            <Snackbar
+                open={msgOn}
+                autoHideDuration={3000}
+                onClose={() => setMsgOn(false)}
+                message={msg}
+                action={action}
+            />
         </>
     )
 }

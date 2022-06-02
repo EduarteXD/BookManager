@@ -58,7 +58,7 @@ io.on('connection', socket => {
                             })
                             throw err
                         }
-                        if (rows.elngth !== 0) {
+                        if (rows.length !== 0) {
                             callback({
                                 stat: true,
                                 uid: rows[0].uid,
@@ -171,6 +171,26 @@ io.on('connection', socket => {
                 callback({
                     success: true,
                     data: rows
+                })
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    })
+
+    socket.on('addBook', (data, callback) => {
+        try {
+            connection.query('insert into `inventory` (`isbn`, `bookname`, `authors`, `description`, `photo`, `category`, `stock`, `price`, `publisher`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [data.isbn, data.name, data.author, data.description, data.photo, data.category, data.count, data.price, data.publisher], err => {
+                if (err) {
+                    callback({
+                        success: false,
+                        msg: err
+                    })
+                    throw err
+                }
+                callback({
+                    success: true
                 })
             })
         } catch (err) {

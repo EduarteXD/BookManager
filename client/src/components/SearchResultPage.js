@@ -1,4 +1,4 @@
-import { Avatar, Button, Checkbox, Divider, FormControlLabel, FormGroup, Grid, Paper, Typography } from '@mui/material'
+import { Button, Checkbox, Divider, FormControlLabel, FormGroup, Grid, Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 
@@ -93,7 +93,7 @@ const SearchResultPage = (args) => {
             >
                 <Grid
                     container
-                    spacing={2}
+                    spacing={4}
                 >
                     <Grid
                         item
@@ -208,6 +208,7 @@ const SearchResultPage = (args) => {
                                             </Typography>
                                             <Typography
                                                 variant='paragraph'
+                                                color='#c2c2c2'
                                             >
                                                 {book.description}
                                             </Typography>

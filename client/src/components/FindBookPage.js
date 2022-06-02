@@ -20,6 +20,7 @@ const FindBookPage = (args) => {
         } else {
             // search by isbn
             ws.emit('bookData', key, response => {
+                response.isbn = key
                 window.sessionStorage['bookData'] = JSON.stringify(response)
                 args.setPage(2)
             })
@@ -87,6 +88,7 @@ const FindBookPage = (args) => {
                             }
                         }}
                         inputProps={{ 'aria-label': 'isbn' }}
+                        autoFocus
                     />
                     <IconButton
                         sx={{ p: '10px' }}

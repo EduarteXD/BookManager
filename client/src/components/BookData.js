@@ -69,7 +69,7 @@ const BookData = (args) => {
                                     }}
                                 />
                                 <Typography>
-                                    {data.description}
+                                    {data.description.length > 600 ? data.description.substr(0, 600) + '...' : data.description}
                                 </Typography>
                             </>
                         )
@@ -129,7 +129,11 @@ const BookData = (args) => {
                                     display: 'inline'
                                 }}
                             >
-                                <Button>
+                                <Button
+                                    onClick={() => {
+                                        args.setPage(5)
+                                    }}
+                                >
                                     加入库存
                                 </Button>
                             </Box>

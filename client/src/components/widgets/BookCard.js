@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Box, Typography } from '@mui/material'
 
 const BookCard = (args) => {
     let bookInfo = args.bookInfo
@@ -20,11 +20,16 @@ const BookCard = (args) => {
                         >
                             {bookInfo.bookname.length > 15 ? bookInfo.bookname.substr(0, 13) + '...' : bookInfo.bookname}
                         </Typography>
+                        <Box 
+                            sx={{
+                                padding: '10px 0 0 0'
+                            }}
+                        />
                         <Typography
                             variant='body2'
                             color='#c2c2c2'
                         >
-                            {bookInfo.description}
+                            {bookInfo.description.length > 70 ? bookInfo.description.substr(0, 70) + '...' : bookInfo.description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
