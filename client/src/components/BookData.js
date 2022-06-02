@@ -94,11 +94,22 @@ const BookData = (args) => {
                             padding: '0 10px 0 0'
                         }}
                     >
-                        <Button
-                            variant='outlined'
-                        >
-                            借阅
-                        </Button>
+                        {
+                            args.user.loggedin ? (
+                                <Button
+                                    variant='outlined'
+                                >
+                                    借阅
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant='outlined'
+                                    disabled
+                                >
+                                    登录以借阅
+                                </Button>
+                            )
+                        }
                     </Box>
                     <Box
                         sx={{
@@ -111,9 +122,22 @@ const BookData = (args) => {
                             返回
                         </Button>
                     </Box>
+                    {
+                        args.user.type === 2 && (
+                            <Box
+                                sx={{
+                                    display: 'inline'
+                                }}
+                            >
+                                <Button>
+                                    加入库存
+                                </Button>
+                            </Box>
+                        )
+                    }
                 </Box>
             </Paper>
-            <Box 
+            <Box
                 sx={{
                     height: '120px'
                 }}

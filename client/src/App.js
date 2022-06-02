@@ -35,11 +35,9 @@ const App = () => {
           setLoading(false)
         })
       }
-      /*
       else {
         setLoading(false)
       }
-      */
     }
     else {
       if (window.Notification) {
