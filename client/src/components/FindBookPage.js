@@ -22,6 +22,7 @@ const FindBookPage = (args) => {
             ws.emit('bookData', key, response => {
                 response.isbn = key
                 window.sessionStorage['bookData'] = JSON.stringify(response)
+                window.sessionStorage['fromPage'] = 0
                 args.setPage(2)
             })
         }

@@ -8,7 +8,7 @@ import SearchResultPage from './SearchResultPage'
 import AddToInventoryPage from './AddToInventoryPage'
 
 import Navi from './widgets/Navi'
-import { Snackbar, IconButton } from '@mui/material'
+import { Snackbar, IconButton, Alert } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
 const MainPageFrame = (args) => {
@@ -16,19 +16,6 @@ const MainPageFrame = (args) => {
 
     const [msg, setMsg] = React.useState('')
     const [msgOn, setMsgOn] = React.useState(false)
-
-    const action = (
-        <>
-            <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={() => setMsgOn(false)}
-            >
-                <CloseIcon fontSize="small" />
-            </IconButton>
-        </>
-    )
 
     const success = (msg) => {
         setMsg(msg)
@@ -68,6 +55,7 @@ const MainPageFrame = (args) => {
             {
                 page === 3 && <InventoryPage
                     ws={ws}
+                    setPage={setPage}
                 />
             }
             {
@@ -86,9 +74,9 @@ const MainPageFrame = (args) => {
                 open={msgOn}
                 autoHideDuration={3000}
                 onClose={() => setMsgOn(false)}
-                message={msg}
-                action={action}
-            />
+            >
+                <Alert severity="success" onClose={() => setMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>
+            </Snackbar>
         </>
     )
 }

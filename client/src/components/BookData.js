@@ -117,7 +117,7 @@ const BookData = (args) => {
                         }}
                     >
                         <Button
-                            onClick={() => args.setPage(0)}
+                            onClick={() => args.setPage(parseInt(window.sessionStorage['fromPage']))}
                         >
                             返回
                         </Button>

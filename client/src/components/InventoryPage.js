@@ -53,6 +53,8 @@ const InventoryPage = (args) => {
                             >
                                 <BookCard
                                     bookInfo={book}
+                                    ws={ws}
+                                    setPage={args.setPage}
                                 />
                             </Grid>
                         ))

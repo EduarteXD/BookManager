@@ -141,7 +141,7 @@ io.on('connection', socket => {
 
     socket.on('inventory', (page, callback) => {
         try {
-            connection.query('select `bookid`, `bookname`, `description`, `photo` from `inventory` where `bookid` >= ? and `bookid` < ?', 
+            connection.query('select `bookid`, `bookname`, `description`, `photo`, `isbn` from `inventory` where `bookid` >= ? and `bookid` < ?', 
             [parseInt(page) * 40, (parseInt(page) + 1) * 40], (err, rows) => {
                 if (err) {
                     callback({

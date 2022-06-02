@@ -3,11 +3,20 @@ import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Box,
 
 const BookCard = (args) => {
     let bookInfo = args.bookInfo
+    let ws = args.ws
 
     return (
         <>
             <Card>
-                <CardActionArea>
+                <CardActionArea
+                    onClick={() => {
+                        ws.emit('bookData', bookInfo.isbn, response => {
+                            window.sessionStorage['bookData'] = JSON.stringify(response)
+                            window.sessionStorage['fromPage'] = 3
+                            args.setPage(2)
+                        })
+                    }}
+                >
                     <CardMedia
                         component='img'
                         height='140'
