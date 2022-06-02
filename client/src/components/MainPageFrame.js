@@ -16,10 +16,16 @@ const MainPageFrame = (args) => {
 
     const [msg, setMsg] = React.useState('')
     const [msgOn, setMsgOn] = React.useState(false)
+    const [failMsgOn, setFailMsgOn] = React.useState(false)
 
     const success = (msg) => {
         setMsg(msg)
         setMsgOn(true)
+    }
+
+    const fail = (msg) => {
+        setMsg(msg)
+        setFailMsgOn(true)
     }
 
     /* pages:
@@ -39,6 +45,7 @@ const MainPageFrame = (args) => {
                 page === 0 && <FindBookPage
                     ws={ws}
                     setPage={setPage}
+                    fail={fail}
                 />
             }
             {
@@ -76,6 +83,13 @@ const MainPageFrame = (args) => {
                 onClose={() => setMsgOn(false)}
             >
                 <Alert severity="success" onClose={() => setMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>
+            </Snackbar>
+            <Snackbar
+                open={failMsgOn}
+                autoHideDuration={3000}
+                onClose={() => setFailMsgOn(false)}
+            >
+                <Alert severity="error" onClose={() => setFailMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>
             </Snackbar>
         </>
     )

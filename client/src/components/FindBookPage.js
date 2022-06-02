@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Paper, IconButton, InputBase, Avatar } from '@mui/material'
+import { Box, Paper, IconButton, InputBase, Avatar, LinearProgress } from '@mui/material'
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined'
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
 
@@ -11,7 +11,13 @@ import findBookImg from '../findbook.png'
 const FindBookPage = (args) => {
     let ws = args.ws
 
+    const [searching, setSearching] = React.useState(false)
+
     const handleSubmit = () => {
+        if (searching) {
+            return
+        }
+        setSearching(true)
         let key = document.getElementById('isbn').value.replace(/-+/g, "")
         if (isNaN(key)) {
             // search by title
@@ -20,16 +26,26 @@ const FindBookPage = (args) => {
         } else {
             // search by isbn
             ws.emit('bookData', key, response => {
-                response.isbn = key
-                window.sessionStorage['bookData'] = JSON.stringify(response)
-                window.sessionStorage['fromPage'] = 0
-                args.setPage(2)
+                if (response.success) {
+                    response.isbn = key
+                    window.sessionStorage['bookData'] = JSON.stringify(response)
+                    window.sessionStorage['fromPage'] = 0
+                    args.setPage(2)
+                } else {
+                    setSearching(false)
+                    args.fail('没有结果！')
+                }
             })
         }
     }
 
     return (
         <>
+            {
+                searching && (
+                    <LinearProgress />
+                )
+            }
             <Box
                 sx={{
                     width: {
@@ -80,7 +96,7 @@ const FindBookPage = (args) => {
                     </IconButton>
                     <InputBase
                         sx={{ ml: 1, flex: 1 }}
-                        placeholder="我在年轻时就读过..."
+                        placeholder="输入书名模糊匹配，输入书号精确搜索"
                         id='isbn'
                         onChange={() => {
                             let resolved = resolveISBN(document.getElementById('isbn').value)
@@ -95,6 +111,7 @@ const FindBookPage = (args) => {
                         sx={{ p: '10px' }}
                         aria-label="search"
                         onClick={handleSubmit}
+                        disabled={searching}
                     >
                         <ManageSearchOutlinedIcon />
                     </IconButton>

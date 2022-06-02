@@ -100,10 +100,14 @@ io.on('connection', socket => {
             connection.query('select `bookname`, `authors`, `description`, `photo`, `publisher`, `price`, `stock`, `borrowed` from `inventory` where `isbn` = ?',
                 isbn, (err, rows) => {
                     if (err) {
+                        callback({
+                            success: false
+                        })
                         throw err
                     }
                     if (rows.length > 0) {
                         callback({
+                            success: true,
                             bookName: rows[0].bookname,
                             author: rows[0].authors,
                             photo: rows[0].photo,
@@ -125,15 +129,24 @@ io.on('connection', socket => {
                                 // console.log(body)
                                 if (body.success) {
                                     callback({
+                                        success: true,
                                         bookName: body.data.name,
                                         author: body.data.author,
                                         photo: body.data.cover,
                                         description: body.data.summary,
                                         publisher: body.data.publisher,
                                         price: body.data.price,
-                                        stock: 0
+                                        stock: -1
+                                    })
+                                } else {
+                                    callback({
+                                        success: false
                                     })
                                 }
+                            } else {
+                                callback({
+                                    success: false
+                                })
                             }
                         })
                     }

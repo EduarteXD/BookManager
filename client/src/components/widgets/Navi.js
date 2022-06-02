@@ -1,11 +1,12 @@
 import React from 'react'
 import { SpeedDial, SpeedDialAction } from '@mui/material'
-import SpeedDialIcon from '@mui/material/SpeedDialIcon'
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined'
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
+import Rotate90DegreesCcwOutlinedIcon from '@mui/icons-material/Rotate90DegreesCcwOutlined'
 
 const Navi = (args) => {
     let actions = []
@@ -39,6 +40,8 @@ const Navi = (args) => {
         case 1:
             // user
             actions = [
+                { icon: <Rotate90DegreesCcwOutlinedIcon />, name: '还书', id: 5 },
+                { icon: <ShoppingCartOutlinedIcon />, name: '待出库', id: 4 },
                 { icon: <ManageSearchOutlinedIcon />, name: '找书', id: 2 },
                 { icon: <LogoutOutlinedIcon />, name: '登出', id: 1 },
             ]
@@ -46,6 +49,8 @@ const Navi = (args) => {
         case 2:
             // admin
             actions = [
+                { icon: <Rotate90DegreesCcwOutlinedIcon />, name: '还书', id: 5 },
+                { icon: <ShoppingCartOutlinedIcon />, name: '待出库', id: 4 },
                 { icon: <Inventory2OutlinedIcon />, name: '库存', id: 3 },
                 { icon: <ManageSearchOutlinedIcon />, name: '找书', id: 2 },
                 { icon: <LogoutOutlinedIcon />, name: '登出', id: 1 },

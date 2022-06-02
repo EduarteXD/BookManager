@@ -1,11 +1,11 @@
-import { Box, Grid, Pagination, Stack } from '@mui/material'
+import { Box, Grid, Pagination, Paper, Stack } from '@mui/material'
 import React from 'react'
 
 import BookCard from './widgets/BookCard'
 
 const InventoryPage = (args) => {
     const [pageCount, setPageCount] = React.useState(-1)
-    const [page, setPage] = React.useState(0)
+    const [loading, setLoading] = React.useState(true)
     const [books, setBooks] = React.useState([])
 
     let ws = args.ws
@@ -18,6 +18,7 @@ const InventoryPage = (args) => {
                     ws.emit('inventory', 0, response => {
                         if (response.stat) {
                             setBooks(response.data)
+                            setLoading(false)
                         }
                     })
                 }
@@ -40,32 +41,54 @@ const InventoryPage = (args) => {
                     container
                     spacing={4}
                 >
-
                     {
-                        books.map(book => (
-                            <Grid
-                                key={book.bookid}
-                                item
-                                xs={12}
-                                md={4}
-                                lg={3}
-                            >
-                                <BookCard
-                                    bookInfo={book}
-                                    ws={ws}
-                                    setPage={args.setPage}
-                                />
-                            </Grid>
-                        ))
+                        loading ? (
+                            <>
+                                {
+                                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(key => (
+                                        <Grid
+                                            key={key}
+                                            item
+                                            xs={12}
+                                            md={4}
+                                            lg={3}
+                                        >
+                                            <BookCard />
+                                        </Grid>
+                                    ))
+                                }
+                            </>
+                        ) : (
+                            <>
+                                {
+                                    books.map(book => (
+                                        <Grid
+                                            key={book.bookid}
+                                            item
+                                            xs={12}
+                                            md={4}
+                                            lg={3}
+                                        >
+                                            <BookCard
+                                                bookInfo={book}
+                                                ws={ws}
+                                                setPage={args.setPage}
+                                            />
+                                        </Grid>
+                                    ))
+                                }
+                            </>
+                        )
                     }
                 </Grid>
             </Box>
-            <Box 
+            <Box
                 sx={{
                     height: '120px'
                 }}
             />
-            <Box
+            <Paper
+                elevation={0}
                 sx={{
                     position: 'fixed',
                     bottom: '25px',
@@ -74,21 +97,27 @@ const InventoryPage = (args) => {
                     transform: 'translate(-50%)'
                 }}
             >
-                <Stack spacing={2}>
-                    <Pagination 
-                        count={pageCount} 
-                        hidefirstbutton="true" 
-                        hidelastbutton="true" 
-                        onChange={(e, p) => {
-                            ws.emit('inventory', p - 1, response => {
-                                if (response.stat) {
-                                    setBooks(response.data)
-                                }
-                            })
-                        }}
-                    />
-                </Stack>
-            </Box>
+                <Box
+                    sx={{
+                        padding: '5px 5px 5px 5px'
+                    }}
+                >
+                    <Stack spacing={2}>
+                        <Pagination
+                            count={pageCount}
+                            hidefirstbutton="true"
+                            hidelastbutton="true"
+                            onChange={(e, p) => {
+                                ws.emit('inventory', p - 1, response => {
+                                    if (response.stat) {
+                                        setBooks(response.data)
+                                    }
+                                })
+                            }}
+                        />
+                    </Stack>
+                </Box>
+            </Paper>
         </>
     )
 }

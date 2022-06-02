@@ -26,7 +26,7 @@ const BookData = (args) => {
             <Paper
                 sx={{
                     width: {
-                        sx: '67vw',
+                        xs: '80vw',
                         md: '55vw'
                     },
                     margin: 'auto',
@@ -136,7 +136,8 @@ const BookData = (args) => {
                         </Button>
                     </Box>
                     {
-                        args.user.type === 2 && (
+                        args.user.type === 2 &&
+                        parseInt(data.stock) === -1 && (
                             <Box
                                 sx={{
                                     display: 'inline'
