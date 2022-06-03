@@ -17,6 +17,9 @@ const MainPageFrame = (args) => {
     const [msg, setMsg] = React.useState('')
     const [msgOn, setMsgOn] = React.useState(false)
     const [failMsgOn, setFailMsgOn] = React.useState(false)
+    const [toBorrowCnt, setToBorrowCnt] = React.useState(
+        'borrowedList' in window.sessionStorage ? Object.keys(JSON.parse(window.sessionStorage['borrowedList'])).length : 0
+    )
 
     const success = (msg) => {
         setMsg(msg)
@@ -41,6 +44,7 @@ const MainPageFrame = (args) => {
                 userType={args.user.loggedin ? (args.user.type) : 0}
                 setPage={setPage}
                 success={success}
+                toBorrowCnt={toBorrowCnt}
             />
             {
                 page === 0 && <FindBookPage
@@ -60,6 +64,7 @@ const MainPageFrame = (args) => {
                     user={args.user}
                     fail={fail}
                     setPage={setPage}
+                    setToBorrowCnt={(n) => setToBorrowCnt(n)}
                 />
             }
             {
@@ -71,6 +76,8 @@ const MainPageFrame = (args) => {
             {
                 page === 4 && <SearchResultPage
                     ws={ws}
+                    setPage={setPage}
+                    fail={fail}
                 />
             }
             {
@@ -84,6 +91,8 @@ const MainPageFrame = (args) => {
                 page === 6 && <CartPage 
                     ws={ws}
                     setPage={setPage}
+                    user={args.user}
+                    setToBorrowCnt={setToBorrowCnt}
                 />
             }
             <Snackbar

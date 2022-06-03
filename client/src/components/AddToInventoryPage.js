@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Divider, TextField, Grid, InputAdornment, Button } from '@mui/material'
+import { Paper, Typography, Box, Divider, TextField, Grid, InputAdornment, Button, Breadcrumbs, Link } from '@mui/material'
 import React from 'react'
 
 import resolveISBN from '../functions/resolveISBN'
@@ -9,6 +9,39 @@ const AddToInventoryPage = (args) => {
 
     return (
         <>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px'
+                }}
+            >
+                <Breadcrumbs separator='›'>
+                    <Link
+                        underline='hover'
+                        onClick={(e) => {
+                            e.preventDefault()
+                            args.setPage(0)
+                        }}
+                        color='inherit'
+                        href='/'
+                    >
+                        主页
+                    </Link>
+                    <Link
+                        underline='hover'
+                        onClick={(e) => {
+                            e.preventDefault()
+                            args.setPage(2)
+                        }}
+                        color='inherit'
+                        href='/'
+                    >
+                        图书信息
+                    </Link>
+                    <Typography color='text.primary'>入库</Typography>
+                </Breadcrumbs>
+            </Box>
             <Paper
                 sx={{
                     width: {

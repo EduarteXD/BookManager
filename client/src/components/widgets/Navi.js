@@ -10,7 +10,7 @@ import Rotate90DegreesCcwOutlinedIcon from '@mui/icons-material/Rotate90DegreesC
 
 const Navi = (args) => {
     let actions = []
-
+    
     const act = (actId) => {
         switch (actId) {
             case 0:
@@ -81,7 +81,7 @@ const Navi = (args) => {
                                     key={action.name}
                                     icon={
                                         <Badge 
-                                            badgeContent={Object.keys(JSON.parse(window.sessionStorage['borrowedList'])).length} 
+                                            badgeContent={args.toBorrowCnt} 
                                             color='secondary'
                                         >
                                             {action.icon}

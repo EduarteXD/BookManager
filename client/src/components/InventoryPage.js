@@ -2,12 +2,13 @@ import { Box, Grid, Pagination, Paper, Stack } from '@mui/material'
 import React from 'react'
 
 import BookCard from './widgets/BookCard'
+import BreadcrumbsNavi from './widgets/BreadcrumbsNavi'
 
 const InventoryPage = (args) => {
     const [pageCount, setPageCount] = React.useState(-1)
     const [loading, setLoading] = React.useState(true)
     const [books, setBooks] = React.useState([])
-    
+
     window.sessionStorage['fromPage'] = 3
 
     let ws = args.ws
@@ -30,6 +31,18 @@ const InventoryPage = (args) => {
 
     return (
         <>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px'
+                }}
+            >
+                <BreadcrumbsNavi
+                    setPage={args.setPage}
+                    pageName='库存'
+                />
+            </Box>
             <Box
                 sx={{
                     width: '67vw',

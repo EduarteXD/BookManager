@@ -1,12 +1,12 @@
 import React from 'react'
-import { Box, Paper, IconButton, InputBase, Avatar, LinearProgress } from '@mui/material'
+import { Box, Paper, IconButton, InputBase, LinearProgress } from '@mui/material'
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined'
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined'
 
 import resolveISBN from '../functions/resolveISBN'
 import notification from '../functions/notification'
 
-import findBookImg from '../findbook.png'
+import findBookImg from '../search.svg'
 
 const FindBookPage = (args) => {
     let ws = args.ws
@@ -55,17 +55,17 @@ const FindBookPage = (args) => {
                     },
                     margin: 'auto',
                     position: 'absolute',
+                    textAlign: 'center',
                     left: '50%',
                     top: 'calc(50% - 138px)',
                     transform: 'translate(-50%, -50%)'
                 }}
             >
-                <Avatar
+                <img
                     src={findBookImg}
-                    sx={{
-                        margin: 'auto',
-                        width: 256,
-                        height: 256
+                    style={{
+                        width: 300,
+                        height: 300
                     }}
                 />
                 <Box

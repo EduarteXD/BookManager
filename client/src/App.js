@@ -7,6 +7,11 @@ import MainPageFrame from './components/MainPageFrame'
 
 import './hide_overflow_y.css'
 
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
+
 const App = () => {
   const [ws, setWs] = React.useState(null)
   const [loading, setLoading] = React.useState(true)
@@ -17,7 +22,8 @@ const App = () => {
   const [msgOn, setMsgOn] = React.useState(false)
 
   const connectWs = () => {
-    setWs(websocket('/'))
+    // setWs(websocket('/'))
+    setWs(websocket('localhost:1333/'))
   }
 
   React.useEffect(() => {

@@ -201,7 +201,7 @@ io.on('connection', socket => {
 
     socket.on('searchBook', (key, callback) => {
         try {
-            connection.query('select `bookname`, `description`, `photo`, `publisher`, `price`, `category`, `stock` from `inventory` where `bookname` like ?', key, (err, rows) => {
+            connection.query('select `isbn`, `bookname`, `description`, `photo`, `publisher`, `price`, `category`, `stock` from `inventory` where `bookname` like ?', key, (err, rows) => {
                 if (err) {
                     callback({
                         success: false

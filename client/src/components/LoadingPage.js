@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, LinearProgress, Typography } from '@mui/material'
 
-import LoadingImg from '../loading.png'
+import LoadingImg from '../loading.svg'
 
 const LoadingPage = () => {
     return (
@@ -19,7 +19,7 @@ const LoadingPage = () => {
             >
                 <img
                     src={LoadingImg}
-                    alt='wennie loading'
+                    alt='loading'
                     style={{
                         width: '256px',
                         height: '256px'
@@ -31,7 +31,7 @@ const LoadingPage = () => {
                         color: '#fbb834'
                     }}
                 >
-                    维尼读诗中
+                    加载中
                 </Typography>
             </Box>
         </>

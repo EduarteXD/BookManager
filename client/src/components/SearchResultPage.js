@@ -2,8 +2,12 @@ import { Button, Checkbox, Divider, FormControlLabel, FormGroup, Grid, Paper, Ty
 import { Box } from '@mui/system'
 import React from 'react'
 
+import BreadcrumbsNavi from './widgets/BreadcrumbsNavi'
+
 const SearchResultPage = (args) => {
     let ws = args.ws
+
+    window.sessionStorage['fromPage'] = 4
 
     const [result, setResult] = React.useState()
     const [toRender, setToRender] = React.useState([])
@@ -80,6 +84,18 @@ const SearchResultPage = (args) => {
 
     return (
         <>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px'
+                }}
+            >
+                <BreadcrumbsNavi
+                    setPage={args.setPage}
+                    pageName='搜索结果'
+                />
+            </Box>
             <Box
                 sx={{
                     width: '67vw',
@@ -193,7 +209,7 @@ const SearchResultPage = (args) => {
                             {
                                 toRender.map(book => (
                                     <Box
-                                        key={book.bookname}
+                                        key={book.isbn}
                                     >
                                         <Box
                                             sx={{
@@ -219,6 +235,17 @@ const SearchResultPage = (args) => {
                                         >
                                             <Button
                                                 variant='outlined'
+                                                onClick={() => {
+                                                    ws.emit('bookData', book.isbn, response => {
+                                                        if (response.success) {
+                                                            response.isbn = book.isbn
+                                                            window.sessionStorage['bookData'] = JSON.stringify(response)
+                                                            args.setPage(2)
+                                                        } else {
+                                                            args.fail('内部错误')
+                                                        }
+                                                    })
+                                                }}
                                             >
                                                 详情
                                             </Button>

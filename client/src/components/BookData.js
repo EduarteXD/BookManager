@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Divider, Button } from '@mui/material'
+import { Paper, Typography, Box, Divider, Button, Breadcrumbs, Link } from '@mui/material'
 import React from 'react'
 
 import throwBall from '../functions/throwBall'
@@ -19,6 +19,73 @@ const BookData = (args) => {
 
     return (
         <>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px'
+                }}
+            >
+                <Breadcrumbs separator='›'>
+                    <Link
+                        underline='hover'
+                        onClick={(e) => {
+                            e.preventDefault()
+                            args.setPage(0)
+                        }}
+                        color='inherit'
+                        href='/'
+                    >
+                        主页
+                    </Link>
+                    {
+                        window.sessionStorage['fromPage'] === '3' && (
+                            <Link
+                                underline='hover'
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    args.setPage(3)
+                                }}
+                                color='inherit'
+                                href='/'
+                            >
+                                库存
+                            </Link>
+                        )
+                    }
+                    {
+                        window.sessionStorage['fromPage'] === '4' && (
+                            <Link
+                                underline='hover'
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    args.setPage(4)
+                                }}
+                                color='inherit'
+                                href='/'
+                            >
+                                搜索结果
+                            </Link>
+                        )
+                    }
+                    {
+                        window.sessionStorage['fromPage'] === '6' && (
+                            <Link
+                                underline='hover'
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    args.setPage(6)
+                                }}
+                                color='inherit'
+                                href='/'
+                            >
+                                借阅清单
+                            </Link>
+                        )
+                    }
+                    <Typography color='text.primary'>图书信息</Typography>
+                </Breadcrumbs>
+            </Box>
             {
                 data.photo !== null && (
                     <img
@@ -115,40 +182,44 @@ const BookData = (args) => {
                                             <Button
                                                 id='borrowBtn'
                                                 variant='outlined'
-                                                disabled={bookBorrowed}
                                                 onClick={(event) => {
-                                                    let borrowed = JSON.parse(window.sessionStorage['borrowedList'])
-                                                    if (Object.keys(borrowed).length === args.user.limit) {
-                                                        args.fail('已达借阅上限')
+                                                    if (bookBorrowed) {
+                                                        args.setPage(6)
                                                     } else {
-                                                        setBookBorrowed(true)
-                                                        borrowed[data.isbn] = data
-                                                        window.sessionStorage['borrowedList'] = JSON.stringify(borrowed)
+                                                        let borrowed = 'borrowedList' in window.sessionStorage ? JSON.parse(window.sessionStorage['borrowedList']) : {}
+                                                        if (Object.keys(borrowed).length === args.user.limit) {
+                                                            args.fail('已达借阅上限')
+                                                        } else {
+                                                            setBookBorrowed(true)
+                                                            borrowed[data.isbn] = data
+                                                            window.sessionStorage['borrowedList'] = JSON.stringify(borrowed)
+                                                            args.setToBorrowCnt(Object.keys(borrowed).length)
 
-                                                        let xs = parseInt(event.clientX)
-                                                        let ys = parseInt(event.clientY)
-                                                        let xe = parseInt(window.innerWidth) - 70
-                                                        let ye = parseInt(window.innerHeight) - 70
+                                                            let xs = parseInt(event.clientX)
+                                                            let ys = parseInt(event.clientY)
+                                                            let xe = parseInt(window.innerWidth) - 70
+                                                            let ye = parseInt(window.innerHeight) - 70
 
-                                                        let element = document.getElementById('bookEmoji')
+                                                            let element = document.getElementById('bookEmoji')
 
-                                                        let rotate = 0
+                                                            let rotate = 0
 
-                                                        throwBall(xs, ys, xe, ye, (x, y) => {
-                                                            element.style.left = x + 'px'
-                                                            element.style.top = y + 'px'
-                                                            element.style.display = 'block'
-                                                            element.style.transform = 'rotate(' + rotate + 'deg)'
-                                                            rotate += 0.18
-                                                        })
+                                                            throwBall(xs, ys, xe, ye, (x, y) => {
+                                                                element.style.left = x + 'px'
+                                                                element.style.top = y + 'px'
+                                                                element.style.display = 'block'
+                                                                element.style.transform = 'rotate(' + rotate + 'deg)'
+                                                                rotate += 0.18
+                                                            })
 
-                                                        setTimeout(() => {
-                                                            element.style.display = 'none'
-                                                        }, 500)
+                                                            setTimeout(() => {
+                                                                element.style.display = 'none'
+                                                            }, 500)
+                                                        }
                                                     }
                                                 }}
                                             >
-                                                {bookBorrowed ? '已在借阅清单中' : '借阅'}
+                                                {bookBorrowed ? '在借阅清单中浏览' : '借阅'}
                                             </Button>
                                         ) : (
                                             <Button
