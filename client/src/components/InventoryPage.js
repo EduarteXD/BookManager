@@ -12,7 +12,7 @@ const InventoryPage = (args) => {
 
     let ws = args.ws
 
-    React.useState(() => {
+    React.useEffect(() => {
         if (pageCount === -1) {
             ws.emit('bookCount', response => {
                 if (response.stat) {
