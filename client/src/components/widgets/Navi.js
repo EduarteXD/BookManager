@@ -1,5 +1,5 @@
 import React from 'react'
-import { SpeedDial, SpeedDialAction } from '@mui/material'
+import { Badge, SpeedDial, SpeedDialAction } from '@mui/material'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined'
@@ -25,6 +25,9 @@ const Navi = (args) => {
                 break
             case 3:
                 args.setPage(3)
+                break
+            case 4:
+                args.setPage(6)
                 break
         }
     }
@@ -70,16 +73,36 @@ const Navi = (args) => {
                 icon={<MenuOutlinedIcon />}
             >
                 {
-                    actions.map(action => (
-                        <SpeedDialAction
-                            key={action.name}
-                            icon={action.icon}
-                            tooltipTitle={action.name}
-                            onClick={() => {
-                                act(action.id)
-                            }}
-                        />
-                    ))
+                    actions.map(action => {
+                        return (
+                            action.id === 4 ? (
+                                <SpeedDialAction
+                                    key={action.name}
+                                    icon={
+                                        <Badge 
+                                            badgeContent={Object.keys(JSON.parse(window.sessionStorage['borrowedList'])).length} 
+                                            color='secondary'
+                                        >
+                                            {action.icon}
+                                        </Badge>
+                                    }
+                                    tooltipTitle={action.name}
+                                    onClick={() => {
+                                        act(action.id)
+                                    }}
+                                />
+                            ) : (
+                                <SpeedDialAction
+                                    key={action.name}
+                                    icon={action.icon}
+                                    tooltipTitle={action.name}
+                                    onClick={() => {
+                                        act(action.id)
+                                    }}
+                                />
+                            )
+                        )
+                    })
                 }
             </SpeedDial>
         </>

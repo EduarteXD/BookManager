@@ -8,8 +8,8 @@ import SearchResultPage from './SearchResultPage'
 import AddToInventoryPage from './AddToInventoryPage'
 
 import Navi from './widgets/Navi'
-import { Snackbar, IconButton, Alert } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import { Snackbar, Alert } from '@mui/material'
+import CartPage from './CartPage'
 
 const MainPageFrame = (args) => {
     let ws = args.ws
@@ -56,6 +56,7 @@ const MainPageFrame = (args) => {
             {
                 page === 2 && <BookData
                     user={args.user}
+                    fail={fail}
                     setPage={setPage}
                 />
             }
@@ -75,6 +76,12 @@ const MainPageFrame = (args) => {
                     ws={ws}
                     setPage={setPage}
                     success={success}
+                />
+            }
+            {
+                page === 6 && <CartPage 
+                    ws={ws}
+                    setPage={setPage}
                 />
             }
             <Snackbar

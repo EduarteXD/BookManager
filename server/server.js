@@ -51,7 +51,7 @@ io.on('connection', socket => {
                 break
             case 'tracker':
                 try {
-                    connection.query('select `uid`, `role`, `email` from `users` where `uid` = (select `uid` from `trackers` where `tracker` = ?)', args.tracker, (err, rows) => {
+                    connection.query('select `uid`, `role`, `email`, `borrowed` from `users` where `uid` = (select `uid` from `trackers` where `tracker` = ?)', args.tracker, (err, rows) => {
                         if (err) {
                             callback({
                                 stat: false
@@ -63,7 +63,8 @@ io.on('connection', socket => {
                                 stat: true,
                                 uid: rows[0].uid,
                                 role: rows[0].role,
-                                avatar: crypto.createHash('md5').update(rows[0].email).digest('hex')
+                                avatar: crypto.createHash('md5').update(rows[0].email).digest('hex'),
+                                limit: 12 - rows[0].borrowed
                             })
                         }
                         else {
@@ -114,7 +115,8 @@ io.on('connection', socket => {
                             description: rows[0].description,
                             publisher: rows[0].publisher,
                             price: rows[0].price,
-                            stock: rows[0].stock - rows[0].borrowed
+                            stock: rows[0].stock - rows[0].borrowed,
+                            isbn: isbn
                         })
                     } else {
                         let api = `https://ixnet.icu/api/book?isbn=${isbn}`
@@ -136,7 +138,8 @@ io.on('connection', socket => {
                                         description: body.data.summary,
                                         publisher: body.data.publisher,
                                         price: body.data.price,
-                                        stock: -1
+                                        stock: -1,
+                                        isbn: isbn
                                     })
                                 } else {
                                     callback({

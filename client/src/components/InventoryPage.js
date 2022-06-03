@@ -7,6 +7,8 @@ const InventoryPage = (args) => {
     const [pageCount, setPageCount] = React.useState(-1)
     const [loading, setLoading] = React.useState(true)
     const [books, setBooks] = React.useState([])
+    
+    window.sessionStorage['fromPage'] = 3
 
     let ws = args.ws
 
@@ -84,7 +86,7 @@ const InventoryPage = (args) => {
             </Box>
             <Box
                 sx={{
-                    height: '120px'
+                    height: '150px'
                 }}
             />
             <Paper

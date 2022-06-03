@@ -55,8 +55,6 @@ const BookCard = (args) => {
                         onClick={() => {
                             ws.emit('bookData', bookInfo.isbn, response => {
                                 window.sessionStorage['bookData'] = JSON.stringify(response)
-                                window.sessionStorage['fromPage'] = 3
-                                console.log(response)
                                 args.setPage(2)
                             })
                         }}
@@ -89,8 +87,11 @@ const BookCard = (args) => {
                     <CardActions>
                         <Button
                             size='small'
+                            onClick={args.cardAction === undefined ? () => {
+                                alert('nonono')
+                            } : args.cardAction}
                         >
-                            编辑
+                            {args.cardActionLabel === undefined ? '编辑' : args.cardActionLabel}
                         </Button>
                     </CardActions>
                 </Card>

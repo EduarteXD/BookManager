@@ -30,7 +30,8 @@ const App = () => {
               loggedin: true,
               uid: response.uid,
               avatar: response.avatar,
-              type: response.role
+              type: response.role,
+              limit: response.limit
             })
           }
           console.log('ver. dev@20220602#7')

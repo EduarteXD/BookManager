@@ -86,8 +86,7 @@ const SearchResultPage = (args) => {
                     margin: 'auto',
                     marginTop: {
                         xs: '100px',
-                        md: '150px',
-                        lg: '200px'
+                        md: '150px'
                     }
                 }}
             >
@@ -232,6 +231,11 @@ const SearchResultPage = (args) => {
                     </Grid>
                 </Grid>
             </Box>
+            <Box
+                sx={{
+                    height: '150px'
+                }}
+            />
         </>
     )
 }

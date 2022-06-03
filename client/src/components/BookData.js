@@ -6,6 +6,17 @@ import throwBall from '../functions/throwBall'
 const BookData = (args) => {
     let data = JSON.parse(window.sessionStorage['bookData'])
 
+    const [bookBorrowed, setBookBorrowed] = React.useState(false)
+
+    React.useEffect(() => {
+        if (window.sessionStorage['borrowedList']) {
+            let borrowed = JSON.parse(window.sessionStorage['borrowedList'])
+            if (data.isbn in borrowed) {
+                setBookBorrowed(true)
+            }
+        }
+    }, [])
+
     return (
         <>
             {
@@ -102,27 +113,42 @@ const BookData = (args) => {
                                     {
                                         parseInt(data.stock) > 0 ? (
                                             <Button
+                                                id='borrowBtn'
                                                 variant='outlined'
+                                                disabled={bookBorrowed}
                                                 onClick={(event) => {
-                                                    let xs = parseInt(event.clientX)
-                                                    let ys = parseInt(event.clientY)
-                                                    let xe = parseInt(window.innerWidth) - 70
-                                                    let ye = parseInt(window.innerHeight) - 70
+                                                    let borrowed = JSON.parse(window.sessionStorage['borrowedList'])
+                                                    if (Object.keys(borrowed).length === args.user.limit) {
+                                                        args.fail('已达借阅上限')
+                                                    } else {
+                                                        setBookBorrowed(true)
+                                                        borrowed[data.isbn] = data
+                                                        window.sessionStorage['borrowedList'] = JSON.stringify(borrowed)
 
-                                                    let element = document.getElementById('bookEmoji')
+                                                        let xs = parseInt(event.clientX)
+                                                        let ys = parseInt(event.clientY)
+                                                        let xe = parseInt(window.innerWidth) - 70
+                                                        let ye = parseInt(window.innerHeight) - 70
 
-                                                    throwBall(xs, ys, xe, ye, (x, y) => {
-                                                        element.style.left = x + 'px'
-                                                        element.style.top = y + 'px'
-                                                        element.style.display = 'block'
-                                                    })
+                                                        let element = document.getElementById('bookEmoji')
 
-                                                    setTimeout(() => {
-                                                        element.style.display = 'none'
-                                                    }, 500)
+                                                        let rotate = 0
+
+                                                        throwBall(xs, ys, xe, ye, (x, y) => {
+                                                            element.style.left = x + 'px'
+                                                            element.style.top = y + 'px'
+                                                            element.style.display = 'block'
+                                                            element.style.transform = 'rotate(' + rotate + 'deg)'
+                                                            rotate += 0.18
+                                                        })
+
+                                                        setTimeout(() => {
+                                                            element.style.display = 'none'
+                                                        }, 500)
+                                                    }
                                                 }}
                                             >
-                                                借阅
+                                                {bookBorrowed ? '已在借阅清单中' : '借阅'}
                                             </Button>
                                         ) : (
                                             <Button
@@ -188,7 +214,8 @@ const BookData = (args) => {
                     height: '32px',
                     top: 0,
                     left: 0,
-                    display: 'none'
+                    display: 'none',
+                    transform: 'rotate(0deg)'
                 }}
             >
                 📕
