@@ -23,7 +23,7 @@ const App = () => {
 
   const connectWs = () => {
     // setWs(websocket('/'))
-    setWs(websocket('localhost:1333/'))
+    setWs(websocket(`${window.location.hostname}:1333/`))
   }
 
   React.useEffect(() => {

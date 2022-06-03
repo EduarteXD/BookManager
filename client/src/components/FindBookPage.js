@@ -57,7 +57,7 @@ const FindBookPage = (args) => {
                     position: 'absolute',
                     textAlign: 'center',
                     left: '50%',
-                    top: 'calc(50% - 138px)',
+                    top: 'calc(50% - 144px)',
                     transform: 'translate(-50%, -50%)'
                 }}
             >
@@ -65,7 +65,8 @@ const FindBookPage = (args) => {
                     src={findBookImg}
                     style={{
                         width: 300,
-                        height: 300
+                        height: 300,
+                        transform: 'translate(25%, 8%)' 
                     }}
                 />
                 <Box
