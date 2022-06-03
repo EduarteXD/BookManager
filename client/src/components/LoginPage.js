@@ -28,6 +28,8 @@ const LoginPage = (args) => {
                 // window.localStorage['uid'] = response.uid
                 // window.localStorage['avatar'] = avatar
                 window.location.reload()
+            } else {
+                args.fail('密码错误！')
             }
         })
     }

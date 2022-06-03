@@ -40,6 +40,7 @@ const MainPageFrame = (args) => {
             <Navi
                 userType={args.user.loggedin ? (args.user.type) : 0}
                 setPage={setPage}
+                success={success}
             />
             {
                 page === 0 && <FindBookPage
@@ -51,6 +52,7 @@ const MainPageFrame = (args) => {
             {
                 page === 1 && <LoginPage
                     ws={ws}
+                    fail={fail}
                 />
             }
             {

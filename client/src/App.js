@@ -1,5 +1,6 @@
 import React from 'react'
 import websocket from 'socket.io-client'
+import { Snackbar, Alert } from '@mui/material'
 
 import LoadingPage from './components/LoadingPage'
 import MainPageFrame from './components/MainPageFrame'
@@ -12,6 +13,8 @@ const App = () => {
   const [user, setUser] = React.useState({
     loggedin: false
   })
+
+  const [msgOn, setMsgOn] = React.useState(false)
 
   const connectWs = () => {
     setWs(websocket('/'))
@@ -29,10 +32,12 @@ const App = () => {
             setUser({
               loggedin: true,
               uid: response.uid,
+              uname: response.uname,
               avatar: response.avatar,
               type: response.role,
               limit: response.limit
             })
+            setMsgOn(true)
           }
           console.log('ver. dev@20220602#7')
           setLoading(false)
@@ -65,6 +70,13 @@ const App = () => {
               user={user}
               ws={ws}
             />
+            <Snackbar
+                open={msgOn}
+                autoHideDuration={3000}
+                onClose={() => setMsgOn(false)}
+            >
+                <Alert severity="success" onClose={() => setMsgOn(false)} sx={{ width: '100%' }}>登录为：{user.uname}</Alert>
+            </Snackbar>
           </>
         )
       }

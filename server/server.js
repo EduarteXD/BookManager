@@ -30,8 +30,8 @@ io.on('connection', socket => {
                             if (err) {
                                 throw err
                             }
-                            let tracker = await genTracker(rows[0].uid)
                             if (rows.length !== 0) {
+                                let tracker = await genTracker(rows[0].uid)
                                 callback({
                                     stat: true,
                                     uid: rows[0].uid,
@@ -51,7 +51,7 @@ io.on('connection', socket => {
                 break
             case 'tracker':
                 try {
-                    connection.query('select `uid`, `role`, `email`, `borrowed` from `users` where `uid` = (select `uid` from `trackers` where `tracker` = ?)', args.tracker, (err, rows) => {
+                    connection.query('select `name`, `uid`, `role`, `email`, `borrowed` from `users` where `uid` = (select `uid` from `trackers` where `tracker` = ?)', args.tracker, (err, rows) => {
                         if (err) {
                             callback({
                                 stat: false
@@ -64,7 +64,8 @@ io.on('connection', socket => {
                                 uid: rows[0].uid,
                                 role: rows[0].role,
                                 avatar: crypto.createHash('md5').update(rows[0].email).digest('hex'),
-                                limit: 12 - rows[0].borrowed
+                                limit: 12 - rows[0].borrowed,
+                                uname: rows[0].name
                             })
                         }
                         else {

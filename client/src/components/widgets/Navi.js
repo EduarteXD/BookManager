@@ -18,7 +18,8 @@ const Navi = (args) => {
                 break
             case 1:
                 window.localStorage.removeItem('tracker')
-                window.location.reload()
+                args.success('已登出，等待页面刷新')
+                setTimeout(() => window.location.reload(), 3500)
                 break
             case 2:
                 args.setPage(0)
