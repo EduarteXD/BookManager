@@ -16,7 +16,6 @@ const io = new Server(server, {
     cors: true
 })
 
-var clients = {}
 var userList = {}
 
 io.on('connection', socket => {
@@ -236,6 +235,21 @@ io.on('connection', socket => {
         } catch (err) {
             console.error(err)
         }
+    })
+
+    socket.on('borrowBook', (data, callback) => {
+        for (let key in data) {
+            let isbn = data[key].isbn
+            let uid = data[key].uid
+
+            connection.query('insert into `borrowed` (`isbn`, `uid`) values (?, ?)', [isbn, uid])
+        }
+
+        connection.query('update `users` set `borrowed` = `borrowed` + ?', data.length)
+
+        callback({
+            success: true
+        })
     })
 })
 

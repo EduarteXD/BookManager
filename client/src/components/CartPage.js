@@ -1,4 +1,4 @@
-import { Grid, Box, Paper, Typography, Divider, Button, Checkbox, FormControlLabel } from '@mui/material'
+import { Grid, Box, Paper, Typography, Divider, Button, Checkbox, FormControlLabel, CircularProgress } from '@mui/material'
 import React from 'react'
 
 import BookCard from './widgets/BookCard'
@@ -7,6 +7,7 @@ import BreadcrumbsNavi from './widgets/BreadcrumbsNavi'
 import NothingImg from '../nothing.svg'
 
 const CartPage = (args) => {
+    const [progress, setProgress] = React.useState(0)
     const [borrowed, setBorrowed] = React.useState(
         'borrowedList' in window.sessionStorage ? JSON.parse(window.sessionStorage['borrowedList']) : {}
     )
@@ -14,8 +15,36 @@ const CartPage = (args) => {
 
     window.sessionStorage['fromPage'] = 6
 
+    window.onscroll = () => {
+        if (document.body.scrollTop + document.documentElement.scrollTop < -50) {
+            document.getElementById('refreshIndicator').style.display='block'
+            setProgress(Math.min(100, -(50 + document.body.scrollTop + document.documentElement.scrollTop) * 4))
+        } else {
+            document.getElementById('refreshIndicator').style.display='none'
+
+        }
+    }
+
+    window.ontouchend = () => {
+        if (document.body.scrollTop + document.documentElement.scrollTop < -75) {
+            window.location.reload()
+        }
+    }
+
     return (
         <>
+            <Box
+                id='refreshIndicator'
+                sx={{
+                    position: 'fixed',
+                    top: '10px',
+                    left: '50%',
+                    transform: 'translate(-50%)',
+                    display: 'none'
+                }}
+            >
+                <CircularProgress variant="determinate" value={progress} />
+            </Box>
             <Box
                 sx={{
                     position: 'absolute',
@@ -117,6 +146,7 @@ const CartPage = (args) => {
                             }}
                         />
                         <Paper
+                            elevation={2}
                             sx={{
                                 position: 'fixed',
                                 margin: 'auto',
