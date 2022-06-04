@@ -14,17 +14,18 @@
 
 实现由ISBN编码精确搜索图书并入库或在库存中按照书名进行模糊搜索
 
-![](https://cdn.oxdl.cn/picgo/image-20220605000304493.png)
+![](https://cdn.oxdl.cn/picgo/image-20220605000304493.png?x-oss-process=image/resize,h_386)
 
 主页👆
 
-![](https://cdn.oxdl.cn/picgo/image-20220605000242428.png)
+![](https://cdn.oxdl.cn/picgo/image-20220605000242428.png?x-oss-process=image/resize,h_386)
 
 按照ISBN号搜素Be like👆，此时由于此书不在库中，系统管理员可以将其添加到书库，并修改图书基本信息和添加数量👇
 
-![](https://cdn.oxdl.cn/picgo/image-20220605000538589.png)
+![](https://cdn.oxdl.cn/picgo/image-20220605000538589.png?x-oss-process=image/resize,h_386)
 
-![image-20220605000754584](https://cdn.oxdl.cn/picgo/image-20220605000754584.png)
+
+![](https://cdn.oxdl.cn/picgo/image-20220605000754584.png?x-oss-process=image/resize,h_386)
 
 模糊搜素👆
 
