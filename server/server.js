@@ -85,8 +85,6 @@ io.on('connection', socket => {
     })
 
     socket.on('bookData', (isbn, callback) => {
-        // let apiKey = process.env.ISBN_API_KEY
-        // let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
         connection.query('select `bookname`, `authors`, `description`, `photo`, `publisher`, `price`, `stock`, `borrowed` from `inventory` where `isbn` = ?',
             isbn, (err, rows) => {
                 if (err) {
@@ -116,7 +114,6 @@ io.on('connection', socket => {
                         }, (err, res, body) => {
                             if (!err && res.statusCode === 200) {
                                 body = JSON.parse(body)
-                                // console.log(body)
                                 if (body.success) {
                                     callback({
                                         success: true,

@@ -1,4 +1,4 @@
-const notification = (title, msg, page, setPage, alt, sendInfo) => {
+const notification = (title, msg, page, setPage, alt, fallback) => {
     if (Notification.permission === 'granted') {
         var notification = new Notification(title, {
             body: msg
@@ -22,13 +22,13 @@ const notification = (title, msg, page, setPage, alt, sendInfo) => {
                 }
             } else {
                 if (alt) {
-                    setTimeout(() => sendInfo(title + ' ' + msg), 3500)
+                    fallback(title + ' ' + msg)
                 }
             }
         })
     }
     else if (alt) {
-        setTimeout(() => sendInfo(title + ' ' + msg), 3500)
+        fallback(title + ' ' + msg)
     }
 }
 

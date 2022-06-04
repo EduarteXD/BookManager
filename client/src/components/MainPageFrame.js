@@ -47,7 +47,7 @@ const MainPageFrame = (args) => {
                 let dateNow = new Date().getTime()
                 for (let key in response.data) {
                     let dateBorrowed = new Date(response.data[key].time).getTime()
-                    if (dateNow - dateBorrowed > 3600 * 1000 * 24 * 7) {
+                    if (dateNow - dateBorrowed > 3600 * 1000 * 24 * 6) {
                         needNotify++
                     }
                 }
@@ -153,7 +153,11 @@ const MainPageFrame = (args) => {
                     </Snackbar>
                     <Snackbar
                         open={infoMsgOn}
-                        autoHideDuration={3000}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left'
+                        }}
+                        autoHideDuration={5000}
                         onClose={() => setInfoMsgOn(false)}
                     >
                         <Alert severity='info' onClose={() => setInfoMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>

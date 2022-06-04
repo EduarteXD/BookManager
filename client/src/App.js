@@ -23,8 +23,8 @@ const App = () => {
   const [msgOn, setMsgOn] = React.useState(false)
 
   const connectWs = () => {
-    setWs(websocket('/'))
-    // setWs(websocket(`${window.location.hostname}:1333/`))
+    // setWs(websocket('/'))
+    setWs(websocket(`${window.location.hostname}:1333/`))
   }
 
   window.onscroll = () => {
@@ -118,7 +118,7 @@ const App = () => {
             />
             <Snackbar
               open={msgOn}
-              autoHideDuration={3000}
+              autoHideDuration={2000}
               onClose={() => setMsgOn(false)}
             >
               <Alert severity="success" onClose={() => setMsgOn(false)} sx={{ width: '100%' }}>登录为：{user.uname}</Alert>
