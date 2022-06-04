@@ -106,7 +106,7 @@ const BookData = (args) => {
             <Paper
                 sx={{
                     width: {
-                        xs: '80vw',
+                        xs: '90vw',
                         md: '55vw'
                     },
                     margin: 'auto',
@@ -149,7 +149,7 @@ const BookData = (args) => {
                                     }}
                                 />
                                 <Typography>
-                                    {data.description.length > 600 ? data.description.substr(0, 600) + '...' : data.description}
+                                    {data.description.length > 250 ? data.description.substr(0, 250) + '...' : data.description}
                                 </Typography>
                             </>
                         )
@@ -234,7 +234,9 @@ const BookData = (args) => {
                             ) : (
                                 <Button
                                     variant='outlined'
-                                    disabled
+                                    onClick={() => {
+                                        args.setPage(1)
+                                    }}
                                 >
                                     登录以借阅
                                 </Button>

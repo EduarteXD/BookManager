@@ -8,7 +8,7 @@ import SearchResultPage from './SearchResultPage'
 import AddToInventoryPage from './AddToInventoryPage'
 
 import Navi from './widgets/Navi'
-import { Snackbar, Alert } from '@mui/material'
+import { Snackbar, Alert, Box } from '@mui/material'
 import CartPage from './CartPage'
 
 const MainPageFrame = (args) => {
@@ -88,27 +88,32 @@ const MainPageFrame = (args) => {
                 />
             }
             {
-                page === 6 && <CartPage 
+                page === 6 && <CartPage
                     ws={ws}
                     setPage={setPage}
                     user={args.user}
                     setToBorrowCnt={setToBorrowCnt}
                 />
             }
-            <Snackbar
-                open={msgOn}
-                autoHideDuration={3000}
-                onClose={() => setMsgOn(false)}
-            >
-                <Alert severity="success" onClose={() => setMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>
-            </Snackbar>
-            <Snackbar
-                open={failMsgOn}
-                autoHideDuration={3000}
-                onClose={() => setFailMsgOn(false)}
-            >
-                <Alert severity="error" onClose={() => setFailMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>
-            </Snackbar>
+            {
+                (msgOn || failMsgOn) &&
+                <Box>
+                    <Snackbar
+                        open={msgOn}
+                        autoHideDuration={3000}
+                        onClose={() => setMsgOn(false)}
+                    >
+                        <Alert severity="success" onClose={() => setMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>
+                    </Snackbar>
+                    <Snackbar
+                        open={failMsgOn}
+                        autoHideDuration={3000}
+                        onClose={() => setFailMsgOn(false)}
+                    >
+                        <Alert severity="error" onClose={() => setFailMsgOn(false)} sx={{ width: '100%' }}>{msg}</Alert>
+                    </Snackbar>
+                </Box>
+            }
         </>
     )
 }

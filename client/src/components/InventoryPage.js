@@ -8,8 +8,36 @@ const InventoryPage = (args) => {
     const [pageCount, setPageCount] = React.useState(-1)
     const [loading, setLoading] = React.useState(true)
     const [books, setBooks] = React.useState([])
+    const [page, setPage] = React.useState(1)
 
     window.sessionStorage['fromPage'] = 3
+
+    window.onkeydown = (e) => {
+        if (e.code === 'ArrowRight') {
+            if (page != pageCount) {
+                ws.emit('inventory', page, response => {
+                    if (response.stat) {
+                        setBooks(response.data)
+                        setPage(page + 1)
+                        document.body.scrollTop = 0
+                        document.documentElement.scrollTop = 0
+                    }
+                })
+            }
+        }
+        if (e.code === 'ArrowLeft') {
+            if (page !== 1) {
+                ws.emit('inventory', page - 2, response => {
+                    if (response.stat) {
+                        setBooks(response.data)
+                        setPage(page - 1)
+                        document.body.scrollTop = 0
+                        document.documentElement.scrollTop = 0
+                    }
+                })
+            }
+        }
+    }
 
     let ws = args.ws
 
@@ -45,7 +73,10 @@ const InventoryPage = (args) => {
             </Box>
             <Box
                 sx={{
-                    width: '67vw',
+                    width: {
+                        md: '67vw',
+                        xs: '75vw'
+                    },
                     margin: 'auto',
                     left: 0,
                     right: 0,
@@ -120,12 +151,16 @@ const InventoryPage = (args) => {
                     <Stack spacing={2}>
                         <Pagination
                             count={pageCount}
+                            page={page}
                             hidefirstbutton="true"
                             hidelastbutton="true"
                             onChange={(e, p) => {
                                 ws.emit('inventory', p - 1, response => {
                                     if (response.stat) {
                                         setBooks(response.data)
+                                        setPage(p)
+                                        document.body.scrollTop = 0
+                                        document.documentElement.scrollTop = 0
                                     }
                                 })
                             }}

@@ -72,6 +72,10 @@ const Navi = (args) => {
                     right: 32
                 }}
                 icon={<MenuOutlinedIcon />}
+                onDoubleClick={() => {
+                    document.body.scrollTop = 0
+                    document.documentElement.scrollTop = 0
+                }}
             >
                 {
                     actions.map(action => {

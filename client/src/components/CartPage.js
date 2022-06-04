@@ -1,4 +1,4 @@
-import { Grid, Box, Paper, Typography, Divider, Button, Checkbox, FormControlLabel, CircularProgress } from '@mui/material'
+import { Grid, Box, Paper, Typography, Divider, Button } from '@mui/material'
 import React from 'react'
 
 import BookCard from './widgets/BookCard'
@@ -7,7 +7,7 @@ import BreadcrumbsNavi from './widgets/BreadcrumbsNavi'
 import NothingImg from '../nothing.svg'
 
 const CartPage = (args) => {
-    const [progress, setProgress] = React.useState(0)
+    // const [progress, setProgress] = React.useState(0)
     const [borrowed, setBorrowed] = React.useState(
         'borrowedList' in window.sessionStorage ? JSON.parse(window.sessionStorage['borrowedList']) : {}
     )
@@ -15,6 +15,7 @@ const CartPage = (args) => {
 
     window.sessionStorage['fromPage'] = 6
 
+    /*
     window.onscroll = () => {
         if (document.body.scrollTop + document.documentElement.scrollTop < -50) {
             document.getElementById('refreshIndicator').style.display='block'
@@ -30,21 +31,10 @@ const CartPage = (args) => {
             window.location.reload()
         }
     }
+    */
 
     return (
         <>
-            <Box
-                id='refreshIndicator'
-                sx={{
-                    position: 'fixed',
-                    top: '10px',
-                    left: '50%',
-                    transform: 'translate(-50%)',
-                    display: 'none'
-                }}
-            >
-                <CircularProgress variant="determinate" value={progress} />
-            </Box>
             <Box
                 sx={{
                     position: 'absolute',
@@ -91,7 +81,10 @@ const CartPage = (args) => {
                     <>
                         <Box
                             sx={{
-                                width: '67vw',
+                                width: {
+                                    md: '67vw',
+                                    xs: '75vw'
+                                },
                                 margin: 'auto',
                                 left: 0,
                                 right: 0,
@@ -142,7 +135,7 @@ const CartPage = (args) => {
                         </Box>
                         <Box
                             sx={{
-                                height: '150px'
+                                height: '230px'
                             }}
                         />
                         <Paper
@@ -150,11 +143,11 @@ const CartPage = (args) => {
                             sx={{
                                 position: 'fixed',
                                 margin: 'auto',
-                                top: '120px',
-                                width: {
-                                    xs: '180px',
-                                    lg: '220px'
+                                top: {
+                                    md: '120px',
+                                    xs: 'calc(100% - 200px)'
                                 },
+                                width: '180px',
                                 left: '-20px'
                             }}
                         >
