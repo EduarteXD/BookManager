@@ -83,6 +83,21 @@ const BookData = (args) => {
                             </Link>
                         )
                     }
+                    {
+                        window.sessionStorage['fromPage'] === '7' && (
+                            <Link
+                                underline='hover'
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    args.setPage(7)
+                                }}
+                                color='inherit'
+                                href='/'
+                            >
+                                还书
+                            </Link>
+                        )
+                    }
                     <Typography color='text.primary'>图书信息</Typography>
                 </Breadcrumbs>
             </Box>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Box, Typography, Skeleton } from '@mui/material'
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Box, Typography, Skeleton, Divider } from '@mui/material'
 
 const BookCard = (args) => {
     let bookInfo = args.bookInfo
@@ -11,33 +11,33 @@ const BookCard = (args) => {
                 <Card>
                     <CardActionArea>
                         <CardMedia>
-                            <Skeleton 
-                                variant="rectangular" 
+                            <Skeleton
+                                variant="rectangular"
                                 width={'100%'}
-                                height={140} 
+                                height={140}
                             />
                         </CardMedia>
                         <CardContent>
-                            <Skeleton 
-                                variant="text" 
+                            <Skeleton
+                                variant="text"
                                 width={'100%'}
                                 height={30}
                                 animation="wave"
                             />
-                            <Skeleton 
-                                variant="text" 
+                            <Skeleton
+                                variant="text"
                                 width={'100%'}
                                 height={20}
                                 animation="wave"
                             />
-                            <Skeleton 
-                                variant="text" 
+                            <Skeleton
+                                variant="text"
                                 width={'100%'}
                                 height={20}
                                 animation="wave"
                             />
-                            <Skeleton 
-                                variant="text" 
+                            <Skeleton
+                                variant="text"
                                 width={'90%'}
                                 height={20}
                                 animation="wave"
@@ -82,11 +82,26 @@ const BookCard = (args) => {
                             >
                                 {bookInfo.description.length > 70 ? bookInfo.description.substr(0, 70) + '...' : bookInfo.description}
                             </Typography>
+                            {
+                                args.timeLeft !== undefined && (
+                                    <Typography>
+                                        {args.timeLeft >= 0 ? '剩余时间' : '已逾期'}:
+                                        <Typography
+                                            color={
+                                                args.timeLeft > 3 ? 'green' : args.timeLeft >= 0 ? 'orange' : 'red'
+                                            }
+                                            variant='paragraph'
+                                        >
+                                            &nbsp;{Math.abs(args.timeLeft)}&nbsp;
+                                        </Typography>
+                                        天
+                                    </Typography>
+                                )
+                            }
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
                         <Button
-                            size='small'
                             onClick={args.cardAction === undefined ? () => {
                                 alert('nonono')
                             } : args.cardAction}

@@ -10,7 +10,7 @@ import Rotate90DegreesCcwOutlinedIcon from '@mui/icons-material/Rotate90DegreesC
 
 const Navi = (args) => {
     let actions = []
-    
+
     const act = (actId) => {
         switch (actId) {
             case 0:
@@ -29,6 +29,9 @@ const Navi = (args) => {
                 break
             case 4:
                 args.setPage(6)
+                break
+            case 5:
+                args.setPage(7)
                 break
         }
     }
@@ -84,8 +87,8 @@ const Navi = (args) => {
                                 <SpeedDialAction
                                     key={action.name}
                                     icon={
-                                        <Badge 
-                                            badgeContent={args.toBorrowCnt} 
+                                        <Badge
+                                            badgeContent={args.toBorrowCnt}
                                             color='secondary'
                                         >
                                             {action.icon}

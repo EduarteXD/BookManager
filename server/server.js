@@ -22,13 +22,10 @@ io.on('connection', socket => {
     socket.on('login', (args, callback) => {
         switch (args.type) {
             case 'pwd':
-                try {
-                    connection.query('select `uid` from `users` where `name` = ? and `pwd` = ?',
-                        [args.user.name, crypto.createHash('md5').update(args.user.pwd).digest('hex')],
-                        async (err, rows) => {
-                            if (err) {
-                                throw err
-                            }
+                connection.query('select `uid` from `users` where `name` = ? and `pwd` = ?',
+                    [args.user.name, crypto.createHash('md5').update(args.user.pwd).digest('hex')],
+                    async (err, rows) => {
+                        if (!err) {
                             if (rows.length !== 0) {
                                 let tracker = await genTracker(rows[0].uid)
                                 callback({
@@ -42,21 +39,16 @@ io.on('connection', socket => {
                                     stat: false
                                 })
                             }
-                        })
-                }
-                catch (err) {
-                    console.error(err)
-                }
+                        }
+                    })
                 break
             case 'tracker':
-                try {
-                    connection.query('select `name`, `uid`, `role`, `email`, `borrowed` from `users` where `uid` = (select `uid` from `trackers` where `tracker` = ?)', args.tracker, (err, rows) => {
-                        if (err) {
-                            callback({
-                                stat: false
-                            })
-                            throw err
-                        }
+                connection.query('select `name`, `uid`, `role`, `email`, `borrowed` from `users` where `uid` = (select `uid` from `trackers` where `tracker` = ?)', args.tracker, (err, rows) => {
+                    if (err) {
+                        callback({
+                            stat: false
+                        })
+                    } else {
                         if (rows.length !== 0) {
                             callback({
                                 stat: true,
@@ -72,10 +64,8 @@ io.on('connection', socket => {
                                 stat: false
                             })
                         }
-                    })
-                } catch (err) {
-                    console.error(err)
-                }
+                    }
+                })
                 break
         }
     })
@@ -97,15 +87,13 @@ io.on('connection', socket => {
     socket.on('bookData', (isbn, callback) => {
         // let apiKey = process.env.ISBN_API_KEY
         // let api = `https://api.jike.xyz/situ/book/isbn/${isbn}?apikey=${apiKey}`
-        try {
-            connection.query('select `bookname`, `authors`, `description`, `photo`, `publisher`, `price`, `stock`, `borrowed` from `inventory` where `isbn` = ?',
-                isbn, (err, rows) => {
-                    if (err) {
-                        callback({
-                            success: false
-                        })
-                        throw err
-                    }
+        connection.query('select `bookname`, `authors`, `description`, `photo`, `publisher`, `price`, `stock`, `borrowed` from `inventory` where `isbn` = ?',
+            isbn, (err, rows) => {
+                if (err) {
+                    callback({
+                        success: false
+                    })
+                } else {
                     if (rows.length > 0) {
                         callback({
                             success: true,
@@ -153,102 +141,144 @@ io.on('connection', socket => {
                             }
                         })
                     }
-                })
-        } catch (err) {
-            console.error(err)
-        }
+                }
+            })
     })
 
     socket.on('bookCount', callback => {
-        try {
-            connection.query('select count(*) from `inventory`', (err, rows) => {
-                if (err) {
-                    callback({
-                        stat: false
-                    })
-                    throw err
-                }
+        connection.query('select count(*) from `inventory`', (err, rows) => {
+            if (err) {
+                callback({
+                    stat: false
+                })
+            } else {
                 callback({
                     stat: true,
                     count: Math.ceil(rows[0]['count(*)'] / 12)
                 })
-            })
-        } catch (err) {
-            console.error(err)
-        }
+            }
+        })
     })
 
     socket.on('inventory', (page, callback) => {
-        try {
-            connection.query('select `bookid`, `bookname`, `description`, `photo`, `isbn` from `inventory` where `bookid` > ? and `bookid` <= ?',
-                [parseInt(page) * 12, (parseInt(page) + 1) * 12], (err, rows) => {
-                    if (err) {
-                        callback({
-                            stat: false
-                        })
-                        throw err
-                    }
+        connection.query('select `bookid`, `bookname`, `description`, `photo`, `isbn` from `inventory` where `bookid` > ? and `bookid` <= ?',
+            [parseInt(page) * 12, (parseInt(page) + 1) * 12], (err, rows) => {
+                if (err) {
+                    callback({
+                        stat: false
+                    })
+                } else {
                     callback({
                         stat: true,
                         data: rows
                     })
-                })
-        } catch (err) {
-            console.error(err)
-        }
+                }
+            })
     })
 
     socket.on('searchBook', (key, callback) => {
-        try {
-            connection.query('select `isbn`, `bookname`, `description`, `photo`, `publisher`, `price`, `category`, `stock` from `inventory` where `bookname` like ?', key, (err, rows) => {
-                if (err) {
-                    callback({
-                        success: false
-                    })
-                    throw err
-                }
+        connection.query('select `isbn`, `bookname`, `description`, `photo`, `publisher`, `price`, `category`, `stock` from `inventory` where `bookname` like ?', key, (err, rows) => {
+            if (err) {
+                callback({
+                    success: false
+                })
+            } else {
                 callback({
                     success: true,
                     data: rows
                 })
-            })
-        } catch (err) {
-            console.error(err)
-        }
+            }
+        })
     })
 
     socket.on('addBook', (data, callback) => {
-        try {
-            connection.query('insert into `inventory` (`isbn`, `bookname`, `authors`, `description`, `photo`, `category`, `stock`, `price`, `publisher`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [data.isbn, data.name, data.author, data.description, data.photo, data.category, data.count, data.price, data.publisher], err => {
-                    if (err) {
-                        callback({
-                            success: false,
-                            msg: err
-                        })
-                        throw err
-                    }
+        connection.query('insert into `inventory` (`isbn`, `bookname`, `authors`, `description`, `photo`, `category`, `stock`, `price`, `publisher`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [data.isbn, data.name, data.author, data.description, data.photo, data.category, data.count, data.price, data.publisher], err => {
+                if (err) {
+                    callback({
+                        success: false,
+                        msg: err
+                    })
+                } else {
                     callback({
                         success: true
                     })
-                })
-        } catch (err) {
-            console.error(err)
-        }
+                }
+            })
     })
 
-    socket.on('borrowBook', (data, callback) => {
-        for (let key in data) {
-            let isbn = data[key].isbn
-            let uid = data[key].uid
-
-            connection.query('insert into `borrowed` (`isbn`, `uid`) values (?, ?)', [isbn, uid])
+    socket.on('borrowBook', async (data, callback) => {
+        let uid = data.uid
+        let stat = {}
+        let borrowedCnt = 0
+        for (let key in data.books) {
+            let isbn = data.books[key]
+            await new Promise(resolve => {
+                connection.query('update `inventory` set `borrowed` = `borrowed` + 1 where `isbn` = ?', isbn, err => {
+                    if (err) {
+                        stat[isbn] = false
+                    } else {
+                        borrowedCnt++
+                        stat[isbn] = true
+                        connection.query('insert into `borrowed` (`isbn`, `uid`) values (?, ?)', [isbn, uid])
+                    }
+                    resolve()
+                })
+            })
         }
 
-        connection.query('update `users` set `borrowed` = `borrowed` + ?', data.length)
+        connection.query('update `users` set `borrowed` = `borrowed` + ?', borrowedCnt)
 
         callback({
-            success: true
+            stat: stat,
+            successCnt: borrowedCnt
+        })
+    })
+
+    socket.on('queryBookBorrowed', (uid, callback) => {
+        connection.query('select `isbn`, `time` from `borrowed` where `uid` = ?', uid, (err, rows) => {
+            if (err) {
+                callback({
+                    success: false
+                })
+            } else {
+                callback({
+                    success: true,
+                    data: rows
+                })
+            }
+        })
+    })
+
+    socket.on('borrowedBooksDetail', (uid, callback) => {
+        connection.query('select `bookname`, `photo`, `description`, `borrowed`.`isbn`, `borrowed`.`time`, `borrowed`.`uid` from `inventory` inner join `borrowed` ON `borrowed`.`isbn` = `inventory`.`isbn` where `uid` = ?', 
+            uid, (err, rows) => {
+                if (err) {
+                    callback({
+                        success: false
+                    })
+                } else {
+                    callback({
+                        success: true,
+                        data: rows
+                    })
+                }
+        })
+    })
+
+    socket.on('turnBack', (data, callback) => {
+        connection.query('delete from `borrowed` where `isbn` = ? and `uid` = ?', [data.isbn, data.uid], err => {
+            if (err) {
+                callback({
+                    success: false
+                })
+            } else {
+                connection.query('update `users` set `borrowed` = `borrowed` - 1 where `uid` = ?', data.uid)
+                connection.query('update `inventory` set `borrowed` = `borrowed` - 1 where `isbn` = ?', data.isbn)
+                callback({
+                    success: true
+                })
+            }
         })
     })
 })

@@ -70,7 +70,7 @@ const CartPage = (args) => {
                                 variant='h5'
                                 sx={{
                                     transform: 'translate(0, -300%)',
-                                    color: '#fbb834'
+                                    color: 'pink'
                                 }}
                             >
                                 什么书都没有
@@ -199,6 +199,19 @@ const CartPage = (args) => {
                                 <Button
                                     fullWidth
                                     variant='outlined'
+                                    onClick={() => {
+                                        ws.emit('borrowBook', {
+                                            uid: args.user.uid,
+                                            books: Object.keys(borrowed)
+                                        }, result => {
+                                            args.success('借阅成功: ' + result.successCnt + '本')
+                                            setTimeout(() => {
+                                                window.sessionStorage.removeItem('borrowedList')
+                                                setBorrowed({})
+                                                args.setToBorrowCnt(0)
+                                            }, 3500)
+                                        })
+                                    }}
                                 >
                                     借阅
                                 </Button>
