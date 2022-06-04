@@ -200,16 +200,30 @@ const CartPage = (args) => {
                                     fullWidth
                                     variant='outlined'
                                     onClick={() => {
-                                        ws.emit('borrowBook', {
-                                            uid: args.user.uid,
-                                            books: Object.keys(borrowed)
-                                        }, result => {
-                                            args.success('借阅成功: ' + result.successCnt + '本')
-                                            setTimeout(() => {
-                                                window.sessionStorage.removeItem('borrowedList')
-                                                setBorrowed({})
-                                                args.setToBorrowCnt(0)
-                                            }, 3500)
+                                        ws.emit('queryBookBorrowed', args.user.uid, response => {
+                                            let needNotify = 0
+                                            let dateNow = new Date().getTime()
+                                            for (let key in response.data) {
+                                                let dateBorrowed = new Date(response.data[key].time).getTime()
+                                                if (dateNow - dateBorrowed > 3600 * 1000 * 24 * 7) {
+                                                    needNotify++
+                                                }
+                                            }
+                                            if (needNotify > 0) {
+                                                args.fail('你有' + needNotify + '本书过期未还，请先归还已过期图书！')
+                                            } else {
+                                                ws.emit('borrowBook', {
+                                                    uid: args.user.uid,
+                                                    books: Object.keys(borrowed)
+                                                }, result => {
+                                                    args.success('借阅成功: ' + result.successCnt + '本')
+                                                    setTimeout(() => {
+                                                        window.sessionStorage.removeItem('borrowedList')
+                                                        setBorrowed({})
+                                                        args.setToBorrowCnt(0)
+                                                    }, 3500)
+                                                })
+                                            }
                                         })
                                     }}
                                 >
