@@ -14,7 +14,7 @@ const InventoryPage = (args) => {
 
     window.onkeydown = (e) => {
         if (e.code === 'ArrowRight') {
-            if (page != pageCount) {
+            if (page !== pageCount) {
                 ws.emit('inventory', page, response => {
                     if (response.stat) {
                         setBooks(response.data)

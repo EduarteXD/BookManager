@@ -15,7 +15,7 @@ const BookData = (args) => {
                 setBookBorrowed(true)
             }
         }
-    }, [])
+    }, [data.isbn])
 
     return (
         <>

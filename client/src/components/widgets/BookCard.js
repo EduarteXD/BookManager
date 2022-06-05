@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Box, Typography, Skeleton, Divider } from '@mui/material'
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Box, Typography, Skeleton } from '@mui/material'
 
 const BookCard = (args) => {
     let bookInfo = args.bookInfo

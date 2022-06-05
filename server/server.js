@@ -248,7 +248,7 @@ io.on('connection', socket => {
     })
 
     socket.on('borrowedBooksDetail', (uid, callback) => {
-        connection.query('select `bookname`, `photo`, `description`, `borrowed`.`isbn`, `borrowed`.`time`, `borrowed`.`uid` from `inventory` inner join `borrowed` ON `borrowed`.`isbn` = `inventory`.`isbn` where `uid` = ?', 
+        connection.query('select `bookname`, `photo`, `description`, `borrowed`.`isbn`, `borrowed`.`time`, `borrowed`.`uid` from `inventory` inner join `borrowed` on `borrowed`.`isbn` = `inventory`.`isbn` where `uid` = ?', 
             uid, (err, rows) => {
                 if (err) {
                     callback({
