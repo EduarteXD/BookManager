@@ -1,8 +1,17 @@
+![](https://cdn.oxdl.cn/picgo/aqq4r-eaakj.svg)
+
 ### 图书管理系统
+
 [![](https://shields.io/badge/author-eduartexd-blue?logo=github&style=for-the-badge)](https://github.com/EduarteXD/) [![](https://shields.io/badge/blog-visit-green?style=for-the-badge&logo=WordPress)](https://oxdl.cn) [![](https://shields.io/badge/releases-view-pink?style=for-the-badge)](https://github.com/EduarteXD/BookManager/releases)
 
 
 ****
+
+#### 技术栈
+
+界面：![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+
+后端：![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101)![MySQL](https://img.shields.io/badge/mysql-orange.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
 #### 基本功能
 
@@ -71,6 +80,8 @@
 在此不多作演示
 
 #### 图书检索Api
+
+[![](https://img.shields.io/badge/bookApi-view-%23121011.svg?style=for-the-badge&logo=github)](https://github.com/EduarteXD/bookApi) [![](https://img.shields.io/badge/bookapi-visit-green.svg?style=for-the-badge)](https://ixnet.icu/api)
 
 最后，当然，也是非常重要的一个功能，以上检索图书和入库实际上也是基于此功能
 
