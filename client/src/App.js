@@ -38,7 +38,9 @@ const App = () => {
 
   window.ontouchend = () => {
     if (document.body.scrollTop + document.documentElement.scrollTop < -75) {
-      window.location.reload()
+      setTimeout(() => {
+        window.location.reload()
+      }, 200)
     }
   }
 
