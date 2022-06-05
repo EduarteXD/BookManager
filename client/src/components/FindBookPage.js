@@ -66,7 +66,7 @@ const FindBookPage = (args) => {
                     style={{
                         width: 300,
                         height: 300,
-                        transform: 'translate(25%, 8%)' 
+                        transform: 'translate(0, 8%)' 
                     }}
                 />
                 <Box

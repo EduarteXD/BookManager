@@ -23,8 +23,8 @@ const App = () => {
   const [msgOn, setMsgOn] = React.useState(false)
 
   const connectWs = () => {
-    // setWs(websocket('/'))
-    setWs(websocket(`${window.location.hostname}:1333/`))
+    setWs(websocket('/'))
+    // setWs(websocket(`${window.location.hostname}:1333/`))
   }
 
   window.onscroll = () => {
