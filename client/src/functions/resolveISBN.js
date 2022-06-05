@@ -8,19 +8,7 @@ const resolveISBN = (input) => {
     for (let i = 0; i < input.length && i < 13; i++) {
         j++
         switch (j) {
-            case 4:
-                j++
-                resolve = resolve + '-'
-                break
-            case 6:
-                j++
-                resolve = resolve + '-'
-                break
-            case 11:
-                j++
-                resolve = resolve + '-'
-                break
-            case 16:
+            case 4: case 6: case 11: case 16:
                 j++
                 resolve = resolve + '-'
                 break
