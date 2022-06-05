@@ -280,8 +280,8 @@ io.on('connection', socket => {
     })
 })
 
-server.listen(1333, () => {
-    console.log('server started at *:1333')
+server.listen(process.env.PORT || 1333, () => {
+    console.log(`server started at *:${process.env.PORT || 1333}`)
 })
 
 const connection = mysql.createConnection({

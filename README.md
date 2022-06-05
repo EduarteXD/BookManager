@@ -1,8 +1,8 @@
 ### 图书管理系统
+[![](https://shields.io/badge/author-eduartexd-blue?logo=github&style=for-the-badge)](https://github.com/EduarteXD/) [![](https://shields.io/badge/blog-visit-green?style=for-the-badge&logo=WordPress)](https://oxdl.cn) [![](https://shields.io/badge/releases-view-pink?style=for-the-badge)](https://github.com/EduarteXD/BookManager/releases)
+
 
 ****
-
-[![](https://shields.io/badge/blog-visit-green?style=for-the-badge)](https://oxdl.cn) [![](https://shields.io/badge/author-eduartexd-blue?style=for-the-badge)](https://github.com/EduarteXD/) [![](https://shields.io/badge/releases-view-pink?style=for-the-badge)](https://github.com/EduarteXD/BookManager/releases)
 
 #### 基本功能
 
@@ -169,7 +169,16 @@ COLLATE='utf8mb4_bin'
 ENGINE=InnoDB;
 ```
 
-在./server目录下创建.env配置文件
+下载
+
+```shell
+mkdir bookManager
+cd bookManager
+wget https://github.com/EduarteXD/BookManager/releases/download/beta/release.zip && unzip release.zip
+rm -rf release.zip
+```
+
+在/bookManager目录下创建.env配置文件
 
 ```
 SQL_HOST=localhost
@@ -178,4 +187,25 @@ DB_USER=用户名
 DB_PWD=密码
 ```
 
-即可
+运行
+
+```shell
+npm install
+npm start
+```
+
+配置Nginx反向代理后台WebSocket连接
+
+```ng
+location ^~ /socket.io/
+{
+    proxy_pass http://127.0.0.1:1333/socket.io/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+}
+```
+
+##### Hint
+
+你可以在.env文件中添加PORT字段来更改服务端监听端口
