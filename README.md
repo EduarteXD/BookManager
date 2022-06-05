@@ -80,6 +80,43 @@
 
 首先创建数据库：
 
+```mermaid
+erDiagram
+	Inventory {
+		INT bookId
+		BIGINT isbn
+		TEXT bookname
+		TEXT authors
+		TEXT description
+		TEXT photo
+		TEXT publisher
+		TEXT price
+		TEXT category
+		TEXT stock
+		TEXT borrowed
+	}
+    Users {
+    	INT uid
+    	TEXT name
+    	TEXT email
+    	TEXT pwd
+    	INT role
+    	INT borrowed
+    }
+    Tracker {
+    	INT uid
+    	TEXT tracker
+    }
+    Borrowed {
+    	INT uid
+    	BIGINT isbn
+    	TIMESTAMP time
+    }
+    Users ||--o| Tracker : has
+    Borrowed }o--|| Inventory : refers
+    Borrowed }o--|| Users : refers
+```
+
 ```sql
 CREATE TABLE `users` (
 	`uid` INT(10) NOT NULL AUTO_INCREMENT,
