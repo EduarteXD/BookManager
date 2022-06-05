@@ -2,6 +2,8 @@
 
 ****
 
+[![](https://shields.io/badge/blog-visit-green?style=for-the-badge)](https://oxdl.cn) [![](https://shields.io/badge/author-eduartexd-blue?style=for-the-badge)](https://github.com/EduarteXD/) [![](https://shields.io/badge/releases-view-pink?style=for-the-badge)](https://github.com/EduarteXD/BookManager/releases)
+
 #### 基本功能
 
 - 图书搜索，入库
@@ -156,8 +158,7 @@ CREATE TABLE `inventory` (
 )
 COLLATE='utf8mb4_bin'
 ENGINE=InnoDB
-AUTO_INCREMENT=32;
-
+AUTO_INCREMENT=0;
 
 CREATE TABLE `borrowed` (
 	`uid` INT(10) NULL DEFAULT NULL,
