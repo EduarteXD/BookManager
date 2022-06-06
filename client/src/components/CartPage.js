@@ -61,6 +61,7 @@ const CartPage = (args) => {
                             }}
                         >
                             <img
+                                alt='noBook'
                                 src={NothingImg}
                                 style={{
                                     transform: 'translate(-1.5%)'

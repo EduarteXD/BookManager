@@ -62,6 +62,7 @@ const FindBookPage = (args) => {
                 }}
             >
                 <img
+                    alt='logo'
                     src={findBookImg}
                     style={{
                         width: 300,
