@@ -12,6 +12,10 @@ const LoginPage = (args) => {
     const [stat, setStat] = React.useState(0)
     let ws = args.ws
 
+    const handleRegister = () => {
+        args.fail('暂不开放注册！')
+    }
+
     const handleLogin = () => {
         let name = document.getElementById('username').value
         let pwd = document.getElementById('password').value
@@ -49,6 +53,7 @@ const LoginPage = (args) => {
             })
         }
         else {
+            setAvatar('')
             setStat(0)
         }
     }
@@ -126,6 +131,19 @@ const LoginPage = (args) => {
                             onClick={handleLogin}
                         >
                             登录
+                        </Button>
+                    </Box>
+                </Collapse>
+                <Collapse
+                    in={stat === 2}
+                >
+                    <Box>
+                        <Button
+                            variant='outlined'
+                            fullWidth
+                            onClick={handleRegister}
+                        >
+                            注册
                         </Button>
                     </Box>
                 </Collapse>
