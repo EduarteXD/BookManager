@@ -2,7 +2,7 @@
 
 ### 图书管理系统
 
-[![](https://shields.io/badge/author-eduartexd-blue?logo=github&style=for-the-badge)](https://github.com/EduarteXD/) [![](https://shields.io/badge/blog-visit-green?style=for-the-badge&logo=WordPress)](https://oxdl.cn) [![](https://shields.io/badge/releases-view-pink?style=for-the-badge)](https://github.com/EduarteXD/BookManager/releases) [![](https://shields.io/badge/demo-visit-yellow?style=for-the-badge&logo=dev.to)](https://dev.oxdl.cn)
+[![](https://shields.io/badge/blog-visit-green?style=for-the-badge&logo=WordPress)](https://oxdl.cn) [![](https://shields.io/badge/releases-view-pink?style=for-the-badge)](https://github.com/EduarteXD/BookManager/releases) [![](https://shields.io/badge/demo-visit-yellow?style=for-the-badge&logo=dev.to)](https://dev.oxdl.cn)
 
 
 ****
